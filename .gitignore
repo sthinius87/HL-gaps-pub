@@ -508,4 +508,4 @@ docs/hl_gaps_pub*
 data/coconut/split_compress.sh
 
 # simply to large for free github
-./data/processed/calc_descriptors_final.pkl 
+data/processed/calc_descriptors_final.pkl

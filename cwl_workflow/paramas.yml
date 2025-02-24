@@ -1,13 +1,13 @@
-inp_dbpath: /home/sat/electronic-gaps/data/db_split 
+inp_dbpath: /home/sat/HL-gaps-pub/db_split 
 inp_dbbasename: COCONUT_2022_01_2D.SDF 
 inp_dbid: 433 
 inp_nconfs: 10 
 inp_accuracy: 1.0 
 inp_eltemp: 300.0 
 inp_method: 'GFN2-xTB' 
-inp_pathV: /home/sat/anaconda3/envs/py310electronic_gaps/bin 
-inp_xtbpathV: /home/sat/anaconda3/envs/py310electronic_gaps/share/xtb 
-inp_condaprefV: /home/sat/anaconda3/envs/py310electronic_gaps 
+inp_pathV: /home/sat/miniforge3/envs/py310hl_gaps_pub/bin 
+inp_xtbpathV: /home/sat/miniforge3/envs/py310hl_gaps_pub/share/xtb 
+inp_condaprefV: /home/sat/miniforge3/envs/py310hl_gaps_pub 
 inp_id_array: 
   - 380001 
   - 380002 
