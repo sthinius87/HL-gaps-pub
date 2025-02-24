@@ -1,0 +1,51 @@
+# This file exists so you can easily regenerate your project.
+#
+# `cookiepatcher` is a convenient shim around `cookiecutter`
+# for regenerating projects (it will generate a .cookiecutterrc
+# automatically for any template). To use it:
+#
+#    cookiepatcher https://gitlab.cc-asp.fraunhofer.de/ifam418/cookiecutter-pypackage HL-gaps-pub
+#
+# The cookiepatcher package is pre-installed in the dev-environment.
+# You can alternatively install via: pip install cookiepatcher
+#
+# See:
+#    https://pypi.org/project/cookiepatcher
+#
+# Alternatively, you can run:
+#
+#    cookiecutter --overwrite-if-exists --config-file=HL-gaps-pub/.cookiecutterrc https://gitlab.cc-asp.fraunhofer.de/ifam418/cookiecutter-pypackage
+
+default_context:
+
+    _copy_without_render:      ['docs/_templates/.*html']
+    _output_dir:               '/home/sat'
+    _repo_dir:                 '/home/sat/.cookiecutters/cookiecutter-pypackage'
+    _template:                 'https://gitlab.cc-asp.fraunhofer.de/ifam418/cookiecutter-pypackage'
+    command_line_interface:    'Click'
+    create_author_file:        'y'
+    create_datadirs:           'y'
+    create_notebookdir:        'y'
+    create_referencedir:       'n'
+    create_reportdir:          'n'
+    docker_baseimage:          'continuumio/miniconda3'
+    docker_registry_namespace: 'ifam418'
+    docker_registry_url:       'container-registry.gitlab.cc-asp.fraunhofer.de'
+    email:                     'sascha.thinius@ifam.fraunhofer.de'
+    full_name:                 'Sascha Thinius'
+    gitlab_pages_url:          'ifam418.pages.fraunhofer.de/HL-gaps-pub'
+    gitlab_repo:               'HL_gaps_pub'
+    gitlab_runner_docker_base_image: 'ubuntu:20.04'
+    gitlab_username:           'ifam418'
+    http_proxy_server:         'http://http-proxy.ifam.fraunhofer.de:81'
+    https_proxy_server:        'http://http-proxy.ifam.fraunhofer.de:81'
+    include_restprimer_in_docs: 'n'
+    open_source_license:       'MIT license'
+    project_name:              'HL-gaps-pub'
+    project_short_description: 'High throughput tight binding calculation of electronic HOMO-LUMO gaps and its prediction for natural compounds'
+    project_slug:              'hl_gaps_pub'
+    python_version:            '3.10'
+    use_extra_pypi_indices:    'y'
+    use_gitlab_ci:             'y'
+    use_pytest:                'y'
+    version:                   '0.1.0'

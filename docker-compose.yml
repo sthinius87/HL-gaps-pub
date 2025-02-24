@@ -1,0 +1,18 @@
+version: "3.3"
+
+services:
+  prod:
+    build:
+      context: .
+      target: production
+      args:
+        INSTALL_PYTHON_VERSION: 3.10
+        HTTP_PROXY: ${HTTP_PROXY}
+        HTTPS_PROXY: ${HTTPS_PROXY}
+        PIP_EXTRA_INDEX_URL: ${PIP_EXTRA_INDEX_URL}
+
+    image: "${CONTAINER_REGISTRY_URL}/${CONTAINER_REGISTRY_NAMESPACE}/HL-gaps-pub:${CONTAINER_REGISTRY_TAG}"
+    env_file:
+      - .env
+    volumes:
+      - ./:/app

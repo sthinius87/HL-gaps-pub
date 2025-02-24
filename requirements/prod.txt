@@ -1,0 +1,4 @@
+# Production requirements as a plain list, do not include other requirements via -r switch
+# '#' can be used as comment
+-r common.txt
+
