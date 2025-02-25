@@ -26,7 +26,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, StandardScaler
 
 # Load data
-X = pd.read_pickle("../calc_descriptors_final.pkl")
+X = pd.read_pickle("../data/processed/calc_descriptors_final.pkl")
 print(f"Number of features: {len(X.columns)}")
 
 # Scale 'Ipc' feature
@@ -38,7 +38,7 @@ scaler = StandardScaler().fit(X)
 X_scaled = scaler.transform(X)
 
 # Load target variable and split data
-df = pd.read_pickle("../gap_smile.pkl")
+df = pd.read_pickle("../data/processed/gap_smile.pkl")
 y = df["GAP"].to_numpy()
 X_train, X_test, y_train, y_test = train_test_split(
     X_scaled, y, test_size=0.3, random_state=42

@@ -1,53 +1,70 @@
-#!/usr/bin/env python
-# coding: utf-8
 import pandas as pd
 import numpy as np
-from sklearn.inspection import permutation_importance
-from sklearn.neural_network import MLPRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import OneHotEncoder,StandardScaler, MinMaxScaler
 from joblib import dump, load
+from sklearn.inspection import permutation_importance
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPRegressor
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
-X=pd.read_pickle("../calc_descriptors_final.pkl")
+def calculate_and_display_permutation_importance(
+    model: MLPRegressor, X: pd.DataFrame, y: np.ndarray, dataset_name: str
+) -> np.ndarray:
+    """
+    Calculates and displays permutation importance for a given model and dataset.
+
+    Args:
+        model: The trained machine learning model.
+        X: The feature matrix.
+        y: The target vector.
+        dataset_name: The name of the dataset ("train" or "test").
+
+    Returns:
+        The sorted indices of feature importances.
+    """
+
+    result = permutation_importance(
+        model, X, y, scoring="r2", n_repeats=12, random_state=42, n_jobs=-1
+    )
+    sorted_idx = result.importances_mean.argsort()[::-1]
+
+    print(f"{dataset_name} set:\n")
+    for i in sorted_idx:
+        print(
+            f"{X.columns[i]}: {result.importances_mean[i]:.4f} +/- {result.importances_std[i]:.4f}"
+        )
+
+    dump(result, f"PI_{dataset_name}.joblib")
+    return sorted_idx
 
 
-df=pd.read_pickle("../gap_smile.pkl")
-y=df["GAP"].to_numpy() #[0:100001:10]
+def main():
+    """
+    Loads data, trains a model, and calculates permutation importance.
+    """
+    X: pd.DataFrame = pd.read_pickle("../calc_descriptors_final.pkl")
+    df: pd.DataFrame = pd.read_pickle("../gap_smile.pkl")
+    y: np.ndarray = df["GAP"].to_numpy()
 
-# Scale data
-scaler = MinMaxScaler()
-X['Ipc'] = scaler.fit_transform(X['Ipc'].values.reshape(-1,1))
-scaler=StandardScaler().fit(X)
-scaled=scaler.transform(X)
-X_train, X_test, y_train, y_test = train_test_split(scaled,y,test_size=0.3,random_state=42)
+    # Scale data
+    ipc_scaler = MinMaxScaler()
+    X["Ipc"] = ipc_scaler.fit_transform(X["Ipc"].values.reshape(-1, 1))
 
-# Train your MLPR model
-load_file='descr_NN_MLP.joblib'
-mlpr=load(load_file)
-#mlpr = MLPRegressor(random_state=42) #Example parameters
-mlpr.fit(X_train, y_train)
+    X_scaler = StandardScaler()
+    X_scaled: np.ndarray = X_scaler.fit_transform(X)
 
-# Calculate permutation importance train
-result_tr = permutation_importance(mlpr, X_train, y_train, scoring='r2', n_repeats=12, random_state=42, n_jobs=-1)
-sorted_idx = result_tr.importances_mean.argsort()[::-1]
+    X_train, X_test, y_train, y_test = train_test_split(
+        X_scaled, y, test_size=0.3, random_state=42
+    )
 
-# Display feature importances train
-print("train set: \n")
-for i in sorted_idx:
-    print(f"{X.columns[i]}: {result_tr.importances_mean[i]:.4f} +/- {result_tr.importances_std[i]:.4f}")
-#joblib
-dump(result_tr, 'PI_tr.joblib') 
+    # Train the model
+    model_file = "descr_NN_MLP.joblib"
+    mlpr: MLPRegressor = load(model_file)
+    mlpr.fit(X_train, y_train)
 
-# Calculate permutation importance test
-result_te = permutation_importance(mlpr, X_test, y_test, scoring='r2', n_repeats=12, random_state=42, n_jobs=-1)
-sorted_idx = result_te.importances_mean.argsort()[::-1]
+    # Calculate and display permutation importance
+    calculate_and_display_permutation_importance(mlpr, X_train, y_train, "train")
+    calculate_and_display_permutation_importance(mlpr, X_test, y_test, "test")
 
-# Display feature importances test
-print("test set: \n")
-for i in sorted_idx:
-    print(f"{X.columns[i]}: {result_te.importances_mean[i]:.4f} +/- {result_te.importances_std[i]:.4f}")
 
-#joblib
-dump(result_te, 'PI_te.joblib') 
-
+if __name__ == "__main__":
+    main()
