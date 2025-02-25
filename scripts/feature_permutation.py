@@ -1,30 +1,29 @@
-import numpy as np
 import pandas as pd
-
+import numpy as np
 from joblib import dump, load
 from sklearn.inspection import permutation_importance
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from typing import Tuple
 
 def calculate_and_display_permutation_importance(
-    model: MLPRegressor, X: pd.DataFrame, y: np.ndarray, dataset_name: str
+    model: MLPRegressor, X: pd.DataFrame, X_scaled: np.ndarray, y: np.ndarray, dataset_name: str
 ) -> np.ndarray:
-    """
-    Calculates and displays permutation importance for a given model and dataset.
+    """Calculates and displays permutation importance.
 
     Args:
-        model: The trained machine learning model.
-        X: The feature matrix.
+        model: The trained model.
+        X: The original DataFrame (for column names).
+        X_scaled: The scaled feature matrix.
         y: The target vector.
-        dataset_name: The name of the dataset ("train" or "test").
+        dataset_name: The dataset name ("train" or "test").
 
     Returns:
-        The sorted indices of feature importances.
+        Sorted indices of feature importances.
     """
-
     result = permutation_importance(
-        model, X, y, scoring="r2", n_repeats=12, random_state=42, n_jobs=-1
+        model, X_scaled, y, scoring="r2", n_repeats=12, random_state=42, n_jobs=-1
     )
     sorted_idx = result.importances_mean.argsort()[::-1]
 
@@ -39,9 +38,7 @@ def calculate_and_display_permutation_importance(
 
 
 def main():
-    """
-    Loads data, trains a model, and calculates permutation importance.
-    """
+    """Loads data, trains a model, and calculates permutation importance."""
     X: pd.DataFrame = pd.read_pickle("../data/processed/calc_descriptors_final.pkl")
     df: pd.DataFrame = pd.read_pickle("../data/processed/gap_smile.pkl")
     y: np.ndarray = df["GAP"].to_numpy()
@@ -63,8 +60,8 @@ def main():
     mlpr.fit(X_train, y_train)
 
     # Calculate and display permutation importance
-    calculate_and_display_permutation_importance(mlpr, X_train, y_train, "train")
-    calculate_and_display_permutation_importance(mlpr, X_test, y_test, "test")
+    calculate_and_display_permutation_importance(mlpr, X, X_train, y_train, "train")
+    calculate_and_display_permutation_importance(mlpr, X, X_test, y_test, "test")
 
 
 if __name__ == "__main__":
