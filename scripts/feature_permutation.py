@@ -1,5 +1,6 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
+
 from joblib import dump, load
 from sklearn.inspection import permutation_importance
 from sklearn.model_selection import train_test_split
@@ -41,8 +42,8 @@ def main():
     """
     Loads data, trains a model, and calculates permutation importance.
     """
-    X: pd.DataFrame = pd.read_pickle("../calc_descriptors_final.pkl")
-    df: pd.DataFrame = pd.read_pickle("../gap_smile.pkl")
+    X: pd.DataFrame = pd.read_pickle("../data/processed/calc_descriptors_final.pkl")
+    df: pd.DataFrame = pd.read_pickle("../data/processed/gap_smile.pkl")
     y: np.ndarray = df["GAP"].to_numpy()
 
     # Scale data
@@ -57,7 +58,7 @@ def main():
     )
 
     # Train the model
-    model_file = "descr_NN_MLP.joblib"
+    model_file = "../data/processed/reg_NN_MLP.joblib"
     mlpr: MLPRegressor = load(model_file)
     mlpr.fit(X_train, y_train)
 
