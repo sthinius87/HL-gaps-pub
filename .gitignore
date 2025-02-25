@@ -512,3 +512,4 @@ data/processed/calc_descriptors_final.pkl
 
 # produced files
 scripts/results.raw
+scripts/nohup.out
