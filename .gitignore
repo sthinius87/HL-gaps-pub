@@ -509,3 +509,6 @@ data/coconut/split_compress.sh
 
 # simply to large for free github
 data/processed/calc_descriptors_final.pkl
+
+# produced files
+scripts/results.raw

@@ -20,21 +20,26 @@ from xtb.libxtb import VERBOSITY_MUTED
 
 
 def _get_dict(entry: list) -> Dict[str, str]:
-    """Parses an SDF entry into a dictionary."""
+    """Parses an SDF entry into a dictionary, handling '<' characters and whitespace in keys."""
     data = {}
     data["2dsdf"] = entry[0].splitlines()
-    for item in entry[1:]:
-        key, value = item.replace("\n", "").split(">")
-        data[key] = value
+    try:
+        data.update({key.replace("<", "").strip(): value.strip() for key, value in (item.replace("\n", "").split(">", 1) for item in entry[1:])})
+    except (ValueError, IndexError) as e:
+        print(f"Error parsing SDF entry: {entry}, Error: {e}")  # More informative error message
+        return {} #Return empty dictionary in case of error instead of crashing.
+
     return data
 
 
 def parse_sdf_db(filepath: str) -> pd.DataFrame:
     """Parses an SDF file into a Pandas DataFrame."""
-    with open(filepath, mode="r") as dbfile:
+    with open(filepath, mode="r", encoding="utf-8") as dbfile:
         dbstr = dbfile.read()
 
     dbitems = dbstr.split("$$$$\n")
+    # Filter out empty entries to prevent errors
+    dbitems = [item for item in dbitems if item.strip()]
     dbitems = [item.split("\n>") for item in dbitems]
     dbparsed = [_get_dict(item) for item in dbitems]
 
