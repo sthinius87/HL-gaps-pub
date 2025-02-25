@@ -85,9 +85,9 @@ reg = MLPRegressor(**best_params)
 reg.fit(X_train, y_train)
 
 # Save model
-with open("descr_NN_MLP.pkl", "wb") as f:
+with open("reg_NN_MLP.pkl", "wb") as f:
     pickle.dump(reg, f)
-dump(reg, "descr_NN_MLP.joblib")
+dump(reg, "reg_NN_MLP.joblib")
 
 # Evaluate on training data
 y_pred_train = reg.predict(X_train)

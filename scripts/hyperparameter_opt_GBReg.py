@@ -78,9 +78,9 @@ reg = GradientBoostingRegressor(**best_params)
 reg.fit(X_train, y_train)
 
 # Save model
-with open("descr_GBR.pkl", "wb") as f:
+with open("reg_GBR.pkl", "wb") as f:
     pickle.dump(reg, f)
-dump(reg, "descr_GBR.joblib")
+dump(reg, "reg_GBR.joblib")
 
 # Evaluate on training data
 y_pred_train = reg.predict(X_train)
