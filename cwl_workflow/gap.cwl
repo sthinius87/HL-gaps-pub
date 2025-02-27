@@ -1,66 +1,93 @@
-class: CommandLineTool
 cwlVersion: v1.2
+class: CommandLineTool
 id: hlgap
+
+doc: |
+  Calculates electronic gaps using the HLgap command-line tool.
+
 baseCommand:
   - HLgap
+
 inputs:
-  - id: dbpath
+  dbpath:
     type: string
+    label: Database path.
+    doc: Path to the database file.
     inputBinding:
       position: 0
-      prefix: '--dbpath'
-  - id: dbbasename
+      prefix: "--dbpath"
+  dbbasename:
     type: string
+    label: Database basename.
+    doc: Basename of the database file.
     inputBinding:
       position: 0
-      prefix: '--dbbasename'
-  - id: dbid
+      prefix: "--dbbasename"
+  dbid:
     type: int
+    label: Database ID.
+    doc: ID of the database entry to process.
     inputBinding:
       position: 0
-      prefix: '--dbid'
-  - id: nconfs
+      prefix: "--dbid"
+  nconfs:
     type: int?
+    label: Number of conformations.
+    doc: Optional number of conformations to consider.
     inputBinding:
       position: 0
-      prefix: '--nconfs'
-  - id: accuracy
+      prefix: "--nconfs"
+  accuracy:
     type: float?
+    label: Accuracy setting.
+    doc: Optional accuracy setting for the calculation.
     inputBinding:
       position: 0
-      prefix: '--accuracy'
-  - id: eltemp
+      prefix: "--accuracy"
+  eltemp:
     type: float?
+    label: Electronic temperature.
+    doc: Optional electronic temperature setting.
     inputBinding:
       position: 0
-      prefix: '--eltemp'
-  - id: method
+      prefix: "--eltemp"
+  method:
     type: string?
+    label: Calculation method.
+    doc: Optional method to use for the calculation.
     inputBinding:
       position: 0
-      prefix: '--method'
-#
-  - id: pathV
+      prefix: "--method"
+  pathV:
     type: string
-  - id: xtbpathV
+    label: Path to VASP executable.
+    doc: Path to the VASP executable.
+  xtbpathV:
     type: string
-  - id: condaprefV
+    label: Path to xTB executable.
+    doc: Path to the xTB executable.
+  condaprefV:
     type: string
+    label: Conda environment prefix.
+    doc: Prefix of the conda environment.
+
 outputs:
-  - id: results
+  results:
     type: File
+    label: Result file.
+    doc: The output file containing the calculation results.
     outputBinding:
-      glob: results*.raw
-label: hlgap
+      glob: "results*.raw"
+
 requirements:
-  - class: ResourceRequirement
+  ResourceRequirement:
     ramMin: 1000
     coresMin: 4
     coresMax: 12
     outdirMin: 1000
-  - class: InlineJavascriptRequirement
-  - class: EnvVarRequirement
+  InlineJavascriptRequirement: {}
+  EnvVarRequirement:
     envDef:
-        PATH: $(inputs.pathV)
-        XTBPATH: $(inputs.xtbpathV)
-        CONDA_PREFIX: $(inputs.condaprefV)
+      PATH: $(inputs.pathV)
+      XTBPATH: $(inputs.xtbpathV)
+      CONDA_PREFIX: $(inputs.condaprefV)

@@ -1,4 +1,4 @@
-inp_dbpath: /home/sat/HL-gaps-pub/db_split 
+inp_dbpath: /home/sat/HL-gaps-pub/data/processed/db_split 
 inp_dbbasename: COCONUT_2022_01_2D.SDF 
 inp_dbid: 433 
 inp_nconfs: 10 
