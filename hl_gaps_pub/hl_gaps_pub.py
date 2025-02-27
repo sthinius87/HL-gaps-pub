@@ -1,4 +1,3 @@
-# hl_gaps_pub/hl_gaps_pub.py
 """Main module for calculating electronic gaps."""
 
 import math
