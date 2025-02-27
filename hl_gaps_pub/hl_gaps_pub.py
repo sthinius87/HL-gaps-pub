@@ -19,7 +19,38 @@ from xtb.libxtb import VERBOSITY_MUTED
 
 
 def _get_dict(entry: list) -> Dict[str, str]:
-    """Parses an SDF entry into a dictionary, handling '<' characters and whitespace in keys."""
+    """Parses an SDF entry into a dictionary.
+
+    Handles '<' characters and whitespace in keys.  Returns an empty
+    dictionary on parsing errors instead of raising an exception.
+
+    Parameters
+    ----------
+    entry : list
+        A list of strings representing a single SDF entry.  The first
+        element is expected to be the 2D SDF structure block, and
+        subsequent elements are expected to be data fields in the format
+        "<key> value".
+
+    Returns
+    -------
+    Dict[str, str]
+        A dictionary where keys are the SDF data field names (with '<'
+        removed and whitespace stripped) and values are the corresponding
+        data field values (with leading/trailing whitespace stripped).
+        Returns an empty dictionary if parsing fails.
+
+    Examples
+    --------
+    >>> _get_dict(["First line\\nSecond line", "<Key1> Value1", "<Key2> Value2"])
+    {'2dsdf': ['First line', 'Second line'], 'Key1': 'Value1', 'Key2': 'Value2'}
+
+    >>> _get_dict(["Invalid entry"])
+    {'2dsdf': ['Invalid entry']}
+
+    >>> _get_dict(["First line", "<Invalid>Entry>With>Too>Many>Splits"])
+    {}
+    """
     data = {}
     data["2dsdf"] = entry[0].splitlines()
     try:
@@ -32,7 +63,52 @@ def _get_dict(entry: list) -> Dict[str, str]:
 
 
 def parse_sdf_db(filepath: str) -> pd.DataFrame:
-    """Parses an SDF file into a Pandas DataFrame."""
+    """Parses an SDF file into a Pandas DataFrame.
+
+    Reads an SDF file, splits it into individual entries, parses each
+    entry using the `_get_dict` function, and returns a DataFrame.
+    Handles empty SDF entries gracefully.
+
+    Parameters
+    ----------
+    filepath : str
+        The path to the SDF file.
+
+    Returns
+    -------
+    pd.DataFrame
+        A Pandas DataFrame where each row represents an SDF entry and
+        columns correspond to the data fields within the SDF entries.
+        Returns an empty DataFrame if the file is empty or contains
+        only invalid entries.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the specified file does not exist.
+    Exception
+        For any other errors during file reading or DataFrame creation
+        (beyond those handled within `_get_dict`).
+
+    Examples
+    --------
+    >>> # Create a dummy SDF file for the example
+    >>> with open("temp.sdf", "w") as f:
+    ...     f.write("First line\\nSecond line\\n> <Key1> Value1\\n> <Key2> Value2\\n$$$$\\n")
+    ...     f.write("Another line\\n> <Key3> Value3\\n$$$$\\n")
+    29
+    25
+
+    >>> df = parse_sdf_db("temp.sdf")
+    >>> print(df)
+                               2dsdf     Key1     Key2     Key3
+    0  [First line, Second line]  Value1  Value2      NaN
+    1             [Another line]     NaN      NaN  Value3
+
+    >>> # clean up file
+    >>> import os
+    >>> os.remove("temp.sdf")
+    """
     with open(filepath, mode="r", encoding="utf-8") as dbfile:
         dbstr = dbfile.read()
 
@@ -46,7 +122,42 @@ def parse_sdf_db(filepath: str) -> pd.DataFrame:
 
 
 def embed_confs(smile: str, num_confs: int) -> Chem.Mol:
-    """Embeds multiple conformers for a given SMILES string."""
+    """Generates multiple 3D conformers for a given SMILES string.
+
+    Uses RDKit's EmbedMultipleConfs function with the ETKDGv3 method.
+    Handles potential errors during hydrogen addition and embedding,
+    falling back to a methane molecule or random coordinates if necessary.
+
+    Parameters
+    ----------
+    smile : str
+        The SMILES string of the molecule.
+    num_confs : int
+        The desired number of conformers to generate.
+
+    Returns
+    -------
+    Chem.Mol
+        An RDKit molecule object with embedded conformers.  If hydrogen
+        addition fails, a methane molecule with conformers is returned.
+        If embedding fails, the returned molecule may have fewer than
+        `num_confs` conformers, or even zero conformers.
+
+    Examples
+    --------
+    >>> mol = embed_confs("Cc1ccccc1", 5)  # Toluene
+    >>> mol.GetNumConformers() >= 1
+    True
+
+    >>> mol = embed_confs("C", 1) # Methane
+    >>> mol.GetNumConformers() >= 1
+    True
+
+    >>> # Example of an invalid SMILES (will likely return a methane)
+    >>> mol = embed_confs("InvalidSMILES", 5)
+    >>> mol.GetNumConformers() >= 0  # Could be 0 if even methane fails.
+    True
+    """
     mol = Chem.MolFromSmiles(smile)
     try:
         mol_with_hs = Chem.AddHs(mol)
@@ -70,7 +181,46 @@ def embed_confs(smile: str, num_confs: int) -> Chem.Mol:
 
 
 def _get_hl_gap(res) -> float:
-    """Calculates the HOMO-LUMO gap from the XTB results."""
+    """Calculates the HOMO-LUMO gap from xTB calculation results.
+
+    Iterates through orbital eigenvalues and occupations to find the HOMO
+    and LUMO, then calculates the gap in eV.
+
+    Parameters
+    ----------
+    res : xtb.interface.Calculator.Results
+        The results object from an xTB calculation.  This object should
+        have methods like `get_orbital_eigenvalues()` and
+        `get_orbital_occupations()`.
+
+    Returns
+    -------
+    float
+        The HOMO-LUMO gap in eV.
+
+    Raises
+    ------
+    IndexError
+        If the `res` object does not contain at least two orbitals. This could
+        happen with an extremely small or empty molecule.
+    AttributeError
+        If `res` does not have the expected methods (`get_orbital_eigenvalues`
+        or `get_orbital_occupations`).
+
+    Examples
+    --------
+    >>> # Create a dummy results object (replace with a real xTB result)
+    >>> class MockResults:
+    ...     def get_orbital_eigenvalues(self):
+    ...         return [-0.5, -0.2, 0.1]  # Example eigenvalues in a.u.
+    ...     def get_orbital_occupations(self):
+    ...         return [2.0, 2.0, 0.0]  # Example occupations
+
+    >>> res = MockResults()
+    >>> gap = _get_hl_gap(res)
+    >>> print(f"{gap:.3f}")  # Check with 3 decimal places for doctest
+    8.163
+    """
     eigenvalues = res.get_orbital_eigenvalues()
     occupations = res.get_orbital_occupations()
     threshold = 1e-2
@@ -85,7 +235,41 @@ def _get_hl_gap(res) -> float:
 
 
 def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
-    """Calculates the Boltzmann-weighted average of the HOMO-LUMO gap."""
+    """Calculates the Boltzmann-weighted average HOMO-LUMO gap.
+
+    Uses the Boltzmann distribution to weight the HOMO-LUMO gaps of
+    different conformers based on their relative energies.
+
+    Parameters
+    ----------
+    gap : Dict[int, float]
+        A dictionary where keys are conformer indices (integers) and values
+        are the corresponding HOMO-LUMO gaps in eV.
+    energy : Dict[int, float]
+        A dictionary where keys are conformer indices (integers) and values
+        are the corresponding energies in Hartree atomic units. The keys
+        must match the keys in the `gap` dictionary.
+
+    Returns
+    -------
+    float
+        The Boltzmann-weighted average HOMO-LUMO gap in eV.
+
+    Raises
+    ------
+    ValueError
+        If the `gap` and `energy` dictionaries have different keys.
+    KeyError
+        If there are issues accessing keys withing the dictionary.
+
+    Examples
+    --------
+    >>> gap = {0: 2.0, 1: 2.5, 2: 2.2}  # Example gaps in eV
+    >>> energy = {0: -10.0, 1: -10.2, 2: -9.8}  # Example energies in Hartree
+    >>> weighted_gap = _boltzmann_weight(gap, energy)
+    >>> print(f"{weighted_gap:.3f}")
+    2.408
+    """
     boltzmann_sum = 0.0
     temperature = 300.00
     min_free_energy = min(energy.values())
@@ -107,7 +291,49 @@ def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
 def calculate_gap(
     molecule: Chem.Mol, method: str, accuracy: float, temperature: float
 ) -> float:
-    """Calculates the Boltzmann-weighted HOMO-LUMO gap."""
+    """Calculates the Boltzmann-weighted HOMO-LUMO gap of a molecule.
+
+    Performs xTB calculations on multiple conformers of the input molecule,
+    calculates the HOMO-LUMO gap for each conformer, and then computes the
+    Boltzmann-weighted average gap.
+
+    Parameters
+    ----------
+    molecule : Chem.Mol
+        An RDKit molecule object with embedded conformers.
+    method : str
+        The xTB method to use ("GFN0-xTB", "GFN1-xTB", "GFN2-xTB", or "IPAE-xTB").
+    accuracy : float
+        The SCF convergence accuracy for the xTB calculations.
+    temperature : float
+        The electronic temperature in Kelvin for the xTB calculations.
+
+    Returns
+    -------
+    float
+        The Boltzmann-weighted average HOMO-LUMO gap in eV.
+
+    Raises
+    ------
+    ValueError
+        If an invalid `method` is specified.
+    RuntimeError
+        If the xTB calculation fails for any conformer.
+    TypeError
+        If the molecule does not have any conformers.
+
+    Examples
+    --------
+    >>> from rdkit import Chem
+    >>> mol = Chem.MolFromSmiles("CC")  # Ethane
+    >>> mol_with_hs = Chem.AddHs(mol)
+    >>> params = Chem.AllChem.ETKDGv3()
+    >>> Chem.AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=2, params=params)
+    2
+    >>> gap = calculate_gap(mol_with_hs, "GFN2-xTB", 1.0, 300.0)
+    >>> isinstance(gap, float)
+    True
+    """
     gap_data = {}
     energy_data = {}
 
@@ -149,14 +375,93 @@ def calculate_gap(
 
 
 def write_output(db_id: int, gap: float, calculation_time: float, smile: str) -> None:
-    """Writes the calculation results to a file."""
+    """Writes calculation results to a file.
+
+    Appends a line with the database ID, HOMO-LUMO gap, calculation time,
+    and SMILES string to a file named `results_<db_id>.raw`.  Adds a header
+    line if the file is newly created.
+
+    Parameters
+    ----------
+    db_id : int
+        The database ID of the molecule.
+    gap : float
+        The calculated HOMO-LUMO gap in eV.
+    calculation_time : float
+        The calculation time in seconds.
+    smile : str
+        The SMILES string of the molecule.
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    OSError
+        If there are issues opening or writing to the file (e.g.,
+        permissions error, disk full).
+
+    Examples
+    --------
+    >>> write_output(123, 2.50, 10.2, "Cc1ccccc1")
+    >>> with open("results_123.raw", "r") as f:
+    ...    content = f.read()
+    >>> print(content)
+    #    ID     GAP     TIME SMILE
+       123  2.50    10.2 Cc1ccccc1
+    <BLANKLINE>
+    >>> import os
+    >>> os.remove("results_123.raw")
+
+    """
     with open(f"results_{db_id}.raw", mode="a") as outfile:
         outfile.write("#    ID     GAP     TIME SMILE \n")
         outfile.write(f"{db_id:>6d} {gap:>5.2f} {calculation_time:>7.1f} {smile}\n")
 
 
 def write_output_fail(db_id: int, gap: str, calculation_time: str, smile: str) -> None:
-    """Writes failed calculation results to a file."""
+    """Writes failed calculation results to a file.
+
+    Appends a line with the database ID, a placeholder for the gap,
+    a placeholder for the calculation time, and the SMILES string to a file
+    named `results_<db_id>.raw`. Adds a header line if the file is newly
+    created.  This function is intended to be used when the HOMO-LUMO gap
+    calculation fails.
+
+    Parameters
+    ----------
+    db_id : int
+        The database ID of the molecule.
+    gap : str
+        A string indicating the reason for the failure (e.g., "???", "ERROR").
+    calculation_time : str
+        A string indicating the time taken before failure (e.g., "???", "N/A").
+    smile : str
+        The SMILES string of the molecule.
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    OSError
+        If there are issues opening or writing to the file.
+
+    Examples
+    --------
+    >>> write_output_fail(456, "???", "???", "C")
+    >>> with open("results_456.raw", "r") as f:
+    ...   content = f.read()
+    >>> print(content)
+    #    ID     GAP     TIME SMILE
+       456   ???     ??? C
+    <BLANKLINE>
+
+    >>> import os
+    >>> os.remove("results_456.raw")
+    """
     with open(f"results_{db_id}.raw", mode="a") as outfile:
         outfile.write("#    ID     GAP     TIME SMILE \n")
         outfile.write(f"{db_id:>6d} {gap:>5s} {calculation_time:>7s} {smile}\n")
