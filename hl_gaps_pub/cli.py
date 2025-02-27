@@ -17,7 +17,11 @@ from hl_gaps_pub.hl_gaps_pub import (
 
 @click.group()
 def cli():
-    """Electronic gaps calculation."""
+    """CLI for calculating electronic gaps.
+
+    This is the main entry point for the command-line interface.
+    It defines a group of commands.
+    """
     pass
 
 
@@ -95,7 +99,41 @@ def get_hl_gap(
     eltemp: float,
     method: str,
 ):
-    """Returns the HOMO-LUMO gap for a given database entry."""
+    """Calculates the HOMO-LUMO gap for a given database entry.
+
+    This command takes a database file and entry ID, extracts the SMILES
+    string, generates conformers, performs an xTB calculation, and
+    returns the Boltzmann-weighted HOMO-LUMO gap.
+
+    Parameters
+    ----------
+    dbpath : str
+        Path to the directory containing the SDF database file.
+    dbbasename : str
+        Basename of the SDF database file.
+    dbid : int
+        ID of the entry within the SDF database.
+    nconfs : int
+        Number of conformers to generate and average over.
+    accuracy : float
+        SCF convergence accuracy for the xTB calculation.
+    eltemp : float
+        Electronic temperature (in Kelvin) for the xTB calculation.
+    method : str
+        The xTB method to use (e.g., "GFN2-xTB").
+
+    Returns
+    -------
+    float or str
+        The calculated Boltzmann-weighted HOMO-LUMO gap in eV, or "???"
+        if the calculation fails.
+
+    Examples
+    --------
+    >>> # Assuming you have a file '0_COCONUT_2022_01_2D.SDF' in './data'
+    >>> result = get_hl_gap(dbpath="./data", dbbasename="COCONUT_2022_01_2D.SDF", dbid=0, nconfs=5, accuracy=0.1, eltemp=300.0, method="GFN2-xTB")
+    >>> print(result)  # doctest: +SKIP
+    """
     start_time = time.time()
     db_file = Path(dbpath) / f"{dbid}_{dbbasename}"
     db_df = parse_sdf_db(str(db_file))
