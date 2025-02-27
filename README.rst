@@ -121,9 +121,9 @@ If you use this package in your research, please cite it as follows:
     @misc{hl_gaps_pub,
       author = {YOUR NAME(S)},
       title = {{HL-gaps-pub: Predicting HOMO-LUMO Gaps of Natural Compounds with Machine Learning}},
-      year = {2024}, %Update the Year
+      year = {2024}, 
       publisher = {Zenodo},
-      version = {v0.1.0}, % Update as you go
+      version = {v0.1.0}, 
       doi = {PLACEHOLDER_DOI},
       url = {https://zenodo.org/record/PLACEHOLDER_ZENODO_RECORD_ID}
     }

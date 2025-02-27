@@ -39,8 +39,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx_copybutton",
     "sphinx_tabs.tabs",
-"sphinx_click",
-
+    "sphinx_click"
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -74,8 +73,7 @@ release = hl_gaps_pub.__version__
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
-
+language = "en"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
@@ -133,14 +131,14 @@ html_theme_options = {
     "footer_icons": [
         {
             "name": "GitLab",
-            "url": "http://HL_gaps_pub/ifam418/HL-gaps-pub",
+            "url": "https://github.com/sthinius87/HL-gaps-pub",
             "html": """
                 <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"></path></svg>
             """,
             "class": "",
         },
     ],
-    "source_edit_link": "HL_gaps_pub/ifam418/HL-gaps-pub/edit/master/docs/{filename}",
+    "source_edit_link": "https://github.com/sthinius87/HL-gaps-pub/docs/{filename}",
 }
 
 # If not "", a "Last updated on:" timestamp is inserted at every page
