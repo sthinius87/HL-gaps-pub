@@ -10,7 +10,7 @@ dependencies:
   - pip
   - python=3.10
   - rdkit
-  - scikit-learn
+  - scikit-learn=1.4.1.post1
   - seaborn
   - xtb
   - xtb-python
