@@ -63,7 +63,7 @@ def main():
     output_file = "paramas.yml"
 
     # Paths and settings (replace with your actual values)
-    db_path = "/home/sat/HL-gaps-pub/db_split" 
+    db_path = "/home/sat/HL-gaps-pub/data/coconut/db_split" 
     db_basename = "COCONUT_2022_01_2D.SDF"
     n_confs = 10
     accuracy = 1.0
