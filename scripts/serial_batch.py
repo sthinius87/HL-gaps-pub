@@ -25,13 +25,16 @@ def main():
     accuracy = 1.0  # Accuracy of calculations (smaller means higher accuracy, e.g., 0.0001)
     temp = 300.0  # Electronic temperature
     method = "GFN2-xTB"  # Tight-binding method to use ["GFN0-xTB","GFN1-xTB","GFN2-xTB","IPEA-xTB"]
+    id_start = 407268
+    id_end = 407270
 
     # Initialize results file
     with paropen("results.raw", mode="a") as ff:
         ff.write("#   ID   GAP    TIME SMILE \n")
 
     t0 = time.time()
-    for ii in range(407268, 407270):
+
+    for ii in range(id_start, id_end):
         t0i = time.time()
         pref = subprocess.getoutput("pwd") + "/../data/coconut/db_split"
         try:
