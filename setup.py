@@ -53,7 +53,7 @@ setup(
     description="High throughput tight binding calculation of electronic HOMO-LUMO gaps and its prediction for natural compounds",
     entry_points={
         "console_scripts": [
-            "HLgap=hl_gaps_pub.cli:get_HLgap",
+            "HLgap=hl_gaps_pub.cli:get_hl_gap",
         ],
     },   
     install_requires=install_requirements,
