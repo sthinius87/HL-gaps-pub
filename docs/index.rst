@@ -1,18 +1,17 @@
 .. include:: ../README.rst
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :hidden:
 
+   installation_dev
    usage
    cli
-   installation_dev
+   tutorial
    contributing
    modules
    authors
    history
-
-   
 
 
 Credits
