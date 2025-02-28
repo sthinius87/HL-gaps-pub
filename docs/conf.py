@@ -20,7 +20,8 @@ import sys
 # relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
 #
-sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath("../"))
+
 
 import hl_gaps_pub
 
@@ -39,8 +40,21 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx_copybutton",
     "sphinx_tabs.tabs",
-    "sphinx_click"
+    "sphinx_click",
+    'nbsphinx',  # nbsphinx extension
 ]
+
+# -- Options for nbsphinx extension ---------------------------------------
+
+# Allow nbgallery directive
+nbsphinx_allow_directives = {
+    'gallery',  # Allows nbgallery (which is an alias for gallery)
+    'code-block', # Allows code blocks inside notebooks
+}
+
+# Example of other nbsphinx options (you might already have some of these)
+nbsphinx_execute = 'never'  # Don't execute notebooks by default (use :timeout:)
+# nbsphinx_timeout = 600  # Global timeout (you can override per-notebook)
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -77,7 +91,7 @@ language = "en"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']  
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
