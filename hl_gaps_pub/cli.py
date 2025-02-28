@@ -25,7 +25,7 @@ def cli():
     pass
 
 
-@cli.command(name="HL-gap")
+@cli.command(name="HLgap")
 @click.version_option()
 @click.option(
     "--dbpath",
@@ -148,7 +148,7 @@ def get_hl_gap(
         write_output_fail(dbid, "???", "???", smile)
         return "???"
     else:
-        gap = calculate_gap(mol=confs, method=method, accuracy=accuracy, temperature=eltemp)
+        gap = calculate_gap(molecule=confs, method=method, accuracy=accuracy, temperature=eltemp)
         end_time = time.time()
         delta_time = end_time - start_time
         print(
