@@ -80,4 +80,4 @@ steps:
       xtbpathV: inp_xtbpathV
       condaprefV: inp_condaprefV
     out:
-      results:
+      results

@@ -60,7 +60,7 @@ def main():
     # --- Configuration ---
     db_start = 407261
     db_end = 407270  # Exclusive
-    output_file = "paramas.yml"
+    output_file = "scatter_inp.yml"
 
     # Paths and settings (replace with your actual values)
     db_path = "/home/sat/HL-gaps-pub/data/coconut/db_split" 
