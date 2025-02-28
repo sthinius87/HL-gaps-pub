@@ -19,6 +19,7 @@ ipython
 ipython-genutils
 isort
 mypy
+nbsphinx
 nbstripout
 pre-commit
 pylint
