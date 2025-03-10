@@ -202,7 +202,7 @@ The `feature_permutation.py` script calculates and displays the permutation impo
 The following notebook visualizes these importances.
 
 .. nbgallery::
-     notebooks/feature_permutation.ipynb
+     notebooks/feature_permutation_show.ipynb
 
 **3.2.4. Outlier Analysis:**
 
