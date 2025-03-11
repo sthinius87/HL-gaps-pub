@@ -22,7 +22,7 @@ def cli():
     This is the main entry point for the command-line interface.
     It defines a group of commands.
     """
-    pass
+    pass # pragma: no cover
 
 
 @cli.command(name="HLgap")
@@ -159,5 +159,5 @@ def get_hl_gap(
         return gap
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     cli()

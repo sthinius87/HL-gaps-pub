@@ -86,7 +86,7 @@ def test_command_line_interface_with_args(tmp_path):
     """Test the HLgap CLI command with specific arguments."""
 
     runner = CliRunner()
-     # --- Construct the RELATIVE path ---
+    # --- Construct the RELATIVE path ---
     # Get the directory of the *current* test file (tests/test_hl_gaps_pub.py)
     current_file_dir = Path(__file__).parent
     # Construct the path to the data directory, relative to the test file
@@ -111,6 +111,8 @@ def test_command_line_interface_with_args(tmp_path):
     _cli_runner_check_result(result)
     assert result.exit_code == 0
 
+    # --- Assertions ---
+
     # Check if the output file exists.  Since we're not using
     # isolated_filesystem, the file will be created in the *current working
     # directory* from which you run pytest.  This is usually the project
@@ -130,4 +132,37 @@ def test_command_line_interface_with_args(tmp_path):
     # --- IMPORTANT: Clean Up ---
     # Because we're not using isolated_filesystem, we need to manually
     # clean up the output file to avoid cluttering the project directory.
+    output_file.unlink()  # Delete the file
+
+# --- Test Function ---
+def test_command_line_interface_no_confs():
+    """Test the HLgap CLI command with no conformers."""
+
+    runner = CliRunner()
+    # Use the *real* file path (relative to the test file)
+    current_file_dir = Path(__file__).parent
+    db_path = str(current_file_dir.parent / "data" / "test")
+    db_basename = "test_no_conf.SDF"  # Use your *real* test.SDF file.
+    db_id = "0"
+    n_confs = "5"
+
+    result = runner.invoke(
+        cli.get_hl_gap,
+        [
+            "-pa", db_path,
+            "-na", db_basename,
+            "-id", db_id,
+            "-nc", n_confs,
+        ]
+    )
+
+    # Check for successful execution
+    _cli_runner_check_result(result)
+    assert result.exit_code == 0
+
+    # --- Assertions ---
+
+    # Check output file exists
+    output_file = Path(f"results_{db_id}.raw") 
+    assert output_file.exists()
     output_file.unlink()  # Delete the file
