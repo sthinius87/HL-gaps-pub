@@ -168,20 +168,46 @@ def test_command_line_interface_no_confs():
     assert output_file.exists()
     output_file.unlink()  # Delete the file
 
+
+
+@pytest.fixture(scope="session", autouse=True)
+def set_xtb_path():
+    """Sets the XTBPATH environment variable before tests run."""
+    original_xtbpath = os.environ.get("XTBPATH")  # Store original value
+    os.environ["XTBPATH"] = "/home/sat/miniforge3/envs/py310hl_gaps_pub/share/xtb"
+    yield  # This is where the tests will run
+    # Restore original XTBPATH after tests (optional, but good practice)
+    if original_xtbpath:
+        os.environ["XTBPATH"] = original_xtbpath
+    else:
+        del os.environ["XTBPATH"] # Or os.unsetenv("XTBPATH") on some systems
+
+
+
     # --- Test Function ---
 
 @pytest.mark.parametrize(
-    "method", ["GFN0-xTB", "GFN1-xTB", "GFN2-xTB", "IPAE-xTB", "GFAE-xTB"]
+    "method", ["GFN0-xTB", "GFN1-xTB", "GFN2-xTB", "IPEA-xTB"]  # Valid methods
 )
 def test_calculate_gap_valid_methods(method):
     """Tests calculate_gap with valid xTB methods."""
-    mol = Chem.MolFromSmiles("CC")  # Ethane
+    mol = Chem.MolFromSmiles("CC")
     mol_with_hs = Chem.AddHs(mol)
     params = Chem.AllChem.ETKDGv3()
     Chem.AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=2, params=params)
     try:
         gap = calculate_gap(mol_with_hs, method, 1.0, 300.0)
         assert isinstance(gap, float)
-        assert gap >= 0.0  # HOMO-LUMO gap should be non-negative
+        assert gap >= 0.0
     except (ValueError, RuntimeError, TypeError) as e:
         pytest.fail(f"calculate_gap failed with method {method}: {e}")
+
+
+def test_calculate_gap_invalid_method():
+    """Tests calculate_gap with an invalid xTB method."""
+    mol = Chem.MolFromSmiles("CC")
+    mol_with_hs = Chem.AddHs(mol)
+    params = Chem.AllChem.ETKDGv3()
+    Chem.AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=2, params=params)
+    with pytest.raises(ValueError, match="Unknown method: GFEA-xTB"):
+        calculate_gap(mol_with_hs, "GFEA-xTB", 1.0, 300.0)

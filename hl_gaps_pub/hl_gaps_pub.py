@@ -288,9 +288,7 @@ def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
     return gap_weighted
 
 
-def calculate_gap(
-    molecule: Chem.Mol, method: str, accuracy: float, temperature: float
-) -> float:
+def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature: float) -> float:
     """Calculates the Boltzmann-weighted HOMO-LUMO gap of a molecule.
 
     Performs xTB calculations on multiple conformers of the input molecule,
@@ -333,40 +331,52 @@ def calculate_gap(
     >>> gap = calculate_gap(mol_with_hs, "GFN2-xTB", 1.0, 300.0)
     >>> isinstance(gap, float)
     True
+
+    >>> # Example of testing the exception for invalid method:
+    >>> with pytest.raises(ValueError, match="Unknown method: InvalidMethod"):
+    ...     calculate_gap(mol_with_hs, "InvalidMethod", 1.0, 300.0)
     """
     gap_data = {}
     energy_data = {}
 
+    if molecule.GetNumConformers() == 0:
+        raise TypeError("Molecule must have conformers for gap calculation.")
+
     for conformer_id in range(molecule.GetNumConformers()):
         mol_block = Chem.MolToMolBlock(molecule, confId=conformer_id)
-        mol_ase = io.read(StringIO(mol_block), format="mol")
 
-        mol_ase.calc = XTB(
-            method=method, accuracy=accuracy, electronic_temperature=temperature, max_iterations=300
-        )
-        optimizer = BFGS(mol_ase, trajectory=None, logfile=None)
-        optimizer.run(fmax=1.0e-03 * mol_ase.get_global_number_of_atoms())
+        if method == "GFN0-xTB" or method == "GFN1-xTB" or method == "GFN2-xTB" or method == "IPEA-xTB":
+            try: #Added try-except block here.
+                mol_ase = io.read(StringIO(mol_block), format="mol")
+                mol_ase.calc = XTB(
+                    method=method, accuracy=accuracy, electronic_temperature=temperature, max_iterations=300
+                )
+                optimizer = BFGS(mol_ase, trajectory=None, logfile=None)
+                optimizer.run(fmax=1.0e-03 * mol_ase.get_global_number_of_atoms())
+                numbers = mol_ase.get_atomic_numbers()
+                positions = mol_ase.get_positions() / Bohr
 
-        numbers = mol_ase.get_atomic_numbers()
-        positions = mol_ase.get_positions() / Bohr
+                if method == "GFN0-xTB":
+                    calculator = Calculator(Param.GFN0xTB, numbers, positions)
+                elif method == "GFN1-xTB":
+                    calculator = Calculator(Param.GFN1xTB, numbers, positions)
+                elif method == "GFN2-xTB":
+                    calculator = Calculator(Param.GFN2xTB, numbers, positions)
+                elif method == "IPEA-xTB":
+                    calculator = Calculator(Param.IPEAxTB, numbers, positions)
 
-        if method == "GFN0-xTB":
-            calculator = Calculator(Param.GFN0xTB, numbers, positions)
-        elif method == "GFN1-xTB":
-            calculator = Calculator(Param.GFN1xTB, numbers, positions)
-        elif method == "GFN2-xTB":
-            calculator = Calculator(Param.GFN2xTB, numbers, positions)
-        elif method == "IPAE-xTB":
-            calculator = Calculator(Param.IPEAxTB, numbers, positions)
+                calculator.set_electronic_temperature(temperature)
+                calculator.set_accuracy(accuracy)
+                calculator.set_verbosity(VERBOSITY_MUTED)
+                result = calculator.singlepoint()
+                energy = result.get_energy()
+                gap = _get_hl_gap(result)
+
+            except Exception as e:
+                raise RuntimeError(f"xTB calculation failed: {e}") from e
+
         else:
             raise ValueError(f"Unknown method: {method}")
-
-        calculator.set_electronic_temperature(temperature)
-        calculator.set_accuracy(accuracy)
-        calculator.set_verbosity(VERBOSITY_MUTED)
-        result = calculator.singlepoint()
-        energy = result.get_energy()
-        gap = _get_hl_gap(result)
 
         gap_data[conformer_id] = gap
         energy_data[conformer_id] = energy
