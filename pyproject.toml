@@ -47,3 +47,6 @@ filterwarnings = [
     "ignore:.*imp module.*:DeprecationWarning",
     "ignore:.*_yaml extension module.*:DeprecationWarning"
 ]
+env = [
+    "XTBPATH=/home/sat/miniforge3/envs/py310hl_gaps_pub/share/xtb"
+]

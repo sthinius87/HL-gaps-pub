@@ -12,6 +12,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 # from hl_gaps_pub import hl_gaps_pub
 from hl_gaps_pub import cli, hl_gaps_pub
+from hl_gaps_pub.hl_gaps_pub import calculate_gap
 from hl_gaps_pub import __version__
 
 @pytest.fixture
@@ -166,3 +167,21 @@ def test_command_line_interface_no_confs():
     output_file = Path(f"results_{db_id}.raw") 
     assert output_file.exists()
     output_file.unlink()  # Delete the file
+
+    # --- Test Function ---
+
+@pytest.mark.parametrize(
+    "method", ["GFN0-xTB", "GFN1-xTB", "GFN2-xTB", "IPAE-xTB", "GFAE-xTB"]
+)
+def test_calculate_gap_valid_methods(method):
+    """Tests calculate_gap with valid xTB methods."""
+    mol = Chem.MolFromSmiles("CC")  # Ethane
+    mol_with_hs = Chem.AddHs(mol)
+    params = Chem.AllChem.ETKDGv3()
+    Chem.AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=2, params=params)
+    try:
+        gap = calculate_gap(mol_with_hs, method, 1.0, 300.0)
+        assert isinstance(gap, float)
+        assert gap >= 0.0  # HOMO-LUMO gap should be non-negative
+    except (ValueError, RuntimeError, TypeError) as e:
+        pytest.fail(f"calculate_gap failed with method {method}: {e}")
