@@ -1,11 +1,12 @@
 # hl_gaps_pub/cli.py
 """Console script for electronic_gaps."""
 
-import click
 import time
-
 from pathlib import Path
 from typing import Union
+
+import click
+
 from hl_gaps_pub.hl_gaps_pub import (
     calculate_gap,
     embed_confs,

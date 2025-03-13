@@ -2,20 +2,20 @@
 
 """Tests for `hl_gaps_pub` package."""
 
-import pytest  # noqa: F401
-from click.testing import CliRunner, Result
-from pathlib import Path
-from unittest.mock import patch
 import contextlib
 import io
 import os
+from pathlib import Path
+from unittest.mock import patch
+
+import pytest  # noqa: F401
+from click.testing import CliRunner, Result
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
 # from hl_gaps_pub import hl_gaps_pub
-from hl_gaps_pub import cli
-from hl_gaps_pub.hl_gaps_pub import calculate_gap, _get_dict, embed_confs
-from hl_gaps_pub import __version__
+from hl_gaps_pub import __version__, cli
+from hl_gaps_pub.hl_gaps_pub import _get_dict, calculate_gap, embed_confs
 
 
 @pytest.fixture
