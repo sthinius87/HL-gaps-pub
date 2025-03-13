@@ -5,16 +5,15 @@
 import pytest  # noqa: F401
 from click.testing import CliRunner, Result
 from pathlib import Path
-from unittest.mock import patch, call, MagicMock
+from unittest.mock import patch
 import contextlib
 import io
-import pandas as pd
 import os
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
 # from hl_gaps_pub import hl_gaps_pub
-from hl_gaps_pub import cli, hl_gaps_pub
+from hl_gaps_pub import cli
 from hl_gaps_pub.hl_gaps_pub import calculate_gap, _get_dict, embed_confs
 from hl_gaps_pub import __version__
 

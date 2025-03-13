@@ -1,11 +1,8 @@
 """Main module for calculating electronic gaps."""
 
 import math
-import os
-import subprocess
-import time
 from io import StringIO
-from typing import Dict, Union
+from typing import Dict
 
 import pandas as pd
 from ase import io
@@ -18,7 +15,7 @@ from xtb.interface import Calculator, Param
 from xtb.libxtb import VERBOSITY_MUTED
 
 
-def _get_dict(entry: list) -> Dict[str, str]:
+def _get_dict(entry: list[str]) -> Dict[str, str]:
     """Parses an SDF entry into a dictionary.
 
     Handles '<' characters and whitespace in keys.  Returns an empty
@@ -26,7 +23,7 @@ def _get_dict(entry: list) -> Dict[str, str]:
 
     Parameters
     ----------
-    entry : list
+    entry : list[str]
         A list of strings representing a single SDF entry.  The first
         element is expected to be the 2D SDF structure block, and
         subsequent elements are expected to be data fields in the format
@@ -189,7 +186,7 @@ def embed_confs(smile: str, num_confs: int) -> Chem.Mol:
     return mol_with_hs
 
 
-def _get_hl_gap(res) -> float:
+def _get_hl_gap(res: object) -> float:
     """Calculates the HOMO-LUMO gap from xTB calculation results.
 
     Iterates through orbital eigenvalues and occupations to find the HOMO

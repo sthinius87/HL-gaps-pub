@@ -5,7 +5,7 @@ import click
 import time
 
 from pathlib import Path
-from typing import Any, Dict, List, Union
+from typing import Union
 from hl_gaps_pub.hl_gaps_pub import (
     calculate_gap,
     embed_confs,
@@ -16,7 +16,7 @@ from hl_gaps_pub.hl_gaps_pub import (
 
 
 @click.group()
-def cli():
+def cli() -> None:
     """CLI for calculating electronic gaps.
 
     This is the main entry point for the command-line interface.
@@ -98,7 +98,7 @@ def get_hl_gap(
     accuracy: float,
     eltemp: float,
     method: str,
-):
+) -> Union[float, str]:
     """Calculates the HOMO-LUMO gap for a given database entry.
 
     This command takes a database file and entry ID, extracts the SMILES
