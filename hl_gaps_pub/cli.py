@@ -132,7 +132,9 @@ def get_hl_gap(
     Examples
     --------
     >>> # Assuming you have a file '0_COCONUT_2022_01_2D.SDF' in './data'
-    >>> result = get_hl_gap(dbpath="./data", dbbasename="COCONUT_2022_01_2D.SDF", dbid=0, nconfs=5, accuracy=0.1, eltemp=300.0, method="GFN2-xTB")
+    >>> result = get_hl_gap(dbpath="./data",
++    ...                      dbbasename="COCONUT_2022_01_2D.SDF", dbid=0,
++    ...                      nconfs=5, accuracy=0.1, eltemp=300.0, method="GFN2-xTB")
     >>> print(result)  # doctest: +SKIP
     """
     start_time = time.time()

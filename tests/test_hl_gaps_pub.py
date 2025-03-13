@@ -34,21 +34,21 @@ def response() -> None:
 #     # assert 'GitHub' in BeautifulSoup(response.content).title.string
 
 
-def _cli_runner_check_result(result: Result, expect_error: bool = False) -> None:
-    """Helper function for checking the cli-runner result."""
-    if expect_error:
-        assert result.exit_code != 0
-
-    elif result.exit_code != 0:
-        msg_stderr = (
-            f"\nstderr=\n{result.stderr}\n" if result.stderr_bytes is not None else ""
-        )
-        msg_stdout = (
-            f"\nstdout=\n{result.stdout}\n" if result.stdout_bytes is not None else ""
-        )
-        raise RuntimeError(msg_stderr + msg_stdout) from result.exception
-
-    return None
+#def _cli_runner_check_result(result: Result, expect_error: bool = False) -> None:
+#    """Helper function for checking the cli-runner result."""
+#    if expect_error:
+#        assert result.exit_code != 0
+#
+#    elif result.exit_code != 0:
+#        msg_stderr = (
+#            f"\nstderr=\n{result.stderr}\n" if result.stderr_bytes is not None else ""
+#        )
+#        msg_stdout = (
+#            f"\nstdout=\n{result.stdout}\n" if result.stdout_bytes is not None else ""
+#        )
+#        raise RuntimeError(msg_stderr + msg_stdout) from result.exception
+#
+#    return None
 
 
 def test_version():
