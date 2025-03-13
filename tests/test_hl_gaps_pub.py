@@ -5,14 +5,16 @@
 import pytest  # noqa: F401
 from click.testing import CliRunner, Result
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, call, MagicMock
+import contextlib
+import io
 import pandas as pd
 import os
 from rdkit import Chem
 from rdkit.Chem import AllChem
 # from hl_gaps_pub import hl_gaps_pub
 from hl_gaps_pub import cli, hl_gaps_pub
-from hl_gaps_pub.hl_gaps_pub import calculate_gap
+from hl_gaps_pub.hl_gaps_pub import calculate_gap, _get_dict, embed_confs
 from hl_gaps_pub import __version__
 
 @pytest.fixture
@@ -211,3 +213,92 @@ def test_calculate_gap_invalid_method():
     Chem.AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=2, params=params)
     with pytest.raises(ValueError, match="Unknown method: GFEA-xTB"):
         calculate_gap(mol_with_hs, "GFEA-xTB", 1.0, 300.0)
+
+def test_calculate_gap_no_conformers():
+    """Test calculate_gap with a molecule that has no conformers."""
+    mol = Chem.MolFromSmiles("CC")  # Create a molecule *without* embedding any conformers
+    with pytest.raises(TypeError, match="Molecule must have conformers for gap calculation."):
+        calculate_gap(mol, "GFN2-xTB", 1.0, 300.0)
+
+@pytest.fixture
+def molecule_with_conformer():
+    """Fixture to create a molecule with one conformer."""
+    mol = Chem.MolFromSmiles("CC")
+    mol = Chem.AddHs(mol)
+    AllChem.EmbedMolecule(mol, AllChem.ETKDGv3())
+    return mol
+
+def test_calculate_gap_xtb_failure(molecule_with_conformer):
+    """Test calculate_gap when the xTB calculation raises RuntimeError."""
+    with patch('xtb.interface.Calculator.singlepoint') as mock_singlepoint, \
+          patch('hl_gaps_pub.hl_gaps_pub._boltzmann_weight', return_value=1.23),\
+          patch('hl_gaps_pub.hl_gaps_pub._get_hl_gap', return_value = 1.00): #Mock to avoid calling other functions
+
+        # Set up the mock to raise a RuntimeError
+        mock_singlepoint.side_effect = Exception("Simulated xTB failure")
+
+        with pytest.raises(RuntimeError, match="xTB calculation failed: Simulated xTB failure"):
+            calculate_gap(molecule_with_conformer, "GFN2-xTB", 1.0, 300.0)
+
+        mock_singlepoint.assert_called_once()
+
+def test_get_dict_valid():
+    """Test _get_dict with a valid SDF entry."""
+    entry = ["First line\nSecond line", "<Key1> Value1", "<Key2> Value2"]
+    expected = {
+        "2dsdf": ["First line", "Second line"],
+        "Key1": "Value1",
+        "Key2": "Value2",
+    }
+    assert _get_dict(entry) == expected
+
+def test_get_dict_empty():
+    """Test _get_dict with an empty entry."""
+    entry = [""]
+    expected = {"2dsdf": []}
+    assert _get_dict(entry) == expected
+
+def test_get_dict_value_error():
+    """Test _get_dict with an entry that causes a ValueError."""
+    entry = ["First line", "InvalidEntryWithoutSeparator"]  # No ">" separator
+    result = _get_dict(entry)
+    assert result == {}  # Should return an *empty* dictionary on error
+
+def test_get_dict_index_error():
+    """Test _get_dict with an entry that causes an IndexError."""
+    entry = ["First line", "<Invalid>Entry>With>Too>Many>Splits"]
+    result = _get_dict(entry)
+    expected = {
+        "2dsdf": ["First line"],
+        "Invalid": "Entry>With>Too>Many>Splits"  # Expected result
+    }
+    assert result == expected
+
+def test_embed_confs_invalid_smiles():
+    # An invalid SMILES string to trigger the exception block
+    invalid_smiles = "InvalidSMILES"
+    num_confs = 5
+    
+    mol = embed_confs(invalid_smiles, num_confs)
+    
+    # The fallback molecule should be methane (CH4)
+    assert mol is not None
+    assert Chem.MolToSmiles(Chem.RemoveHs(mol)) == "C"
+    assert mol.GetNumConformers() >= 0  # It may still have 0 conformers if embedding fails
+
+def test_embed_confs_embedding_failure():
+    """Test embed_confs when EmbedMultipleConfs fails."""
+    # SMILES that is likely to cause embedding failure.
+
+    with patch('rdkit.Chem.AllChem.EmbedMultipleConfs') as mock_embed, \
+        contextlib.redirect_stdout(io.StringIO()) as stdout_capture:  # Capture stdout
+
+        # First call raises exception, second call returns 0
+        mock_embed.side_effect = [Exception("Simulated embedding failure"), 0]
+
+        mol = embed_confs("CC", num_confs=5) # Valid SMILES now
+
+        assert "Simulated embedding failure" in stdout_capture.getvalue()
+        assert "Embedding failed: starting with random coordinates" in stdout_capture.getvalue()
+        assert mol.GetNumConformers() >= 0 # >=0 after fallback
+        assert mock_embed.call_count == 2 # Ensure its called twice.
