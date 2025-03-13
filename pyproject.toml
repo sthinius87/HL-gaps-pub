@@ -43,10 +43,9 @@ disable=['R0801']
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "-rs --cov=hl_gaps_pub --cov-report=term --durations=10"
-env = [
-    "XTBPATH=/home/sat/miniforge3/envs/py310hl_gaps_pub/share/xtb"
-]
 filterwarnings = [
     "ignore:.*imp module.*:DeprecationWarning",
     "ignore:.*_yaml extension module.*:DeprecationWarning"
 ]
+[tool.pytest_env]
+XTBPATH = "/home/sat/miniforge3/envs/py310hl_gaps_pub/share/xtb"
