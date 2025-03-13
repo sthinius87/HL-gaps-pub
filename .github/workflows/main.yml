@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main  # Trigger on pushes to the main branch
-      - master # Trigger on pushes to master branch
+      #- master # Trigger on pushes to master branch
   pull_request:
     branches:
       - main  # Trigger on PRs to the main branch
-      - master # Trigger on PRs to master
+      #- master # Trigger on PRs to master
 
 jobs:
   lint:
@@ -66,18 +66,18 @@ jobs:
         name: html-docs
         path: docs/_build/html
 
-  # Optional: Deploy to GitHub Pages (see notes below)
-  deploy-docs:
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' # Deploy on push on main branch
-    needs: build-docs
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4 #Deploy to Github Pages.
+#  # Optional: Deploy to GitHub Pages (see notes below)
+#  deploy-docs:
+#    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' # Deploy on push on main branch
+#    needs: build-docs
+#    runs-on: ubuntu-latest
+#    permissions:
+#      pages: write
+#      id-token: write
+#    environment:
+#      name: github-pages
+#      url: ${{ steps.deployment.outputs.page_url }}
+#    steps:
+#      - name: Deploy to GitHub Pages
+#        id: deployment
+#        uses: actions/deploy-pages@v4 #Deploy to Github Pages.
