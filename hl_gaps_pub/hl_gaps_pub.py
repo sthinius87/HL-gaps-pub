@@ -2,7 +2,7 @@
 
 import math
 from io import StringIO
-from typing import Dict
+from typing import Dict, Union
 
 import pandas as pd
 from ase import io
@@ -15,7 +15,7 @@ from xtb.interface import Calculator, Param
 from xtb.libxtb import VERBOSITY_MUTED
 
 
-def _get_dict(entry: list[str]) -> Dict[str, str]:
+def _get_dict(entry: list[str]) -> Dict[str, Union[str, list[str]]]:
     """Parses an SDF entry into a dictionary.
 
     Handles '<' characters and whitespace in keys.  Returns an empty
@@ -48,7 +48,7 @@ def _get_dict(entry: list[str]) -> Dict[str, str]:
     >>> _get_dict(["First line", "<Invalid>Entry>With>Too>Many>Splits"])
     {}
     """
-    data = {}
+    data: Dict[str, Union[str, list[str]]] = {}
     data["2dsdf"] = entry[0].splitlines()
     try:
         data.update(
@@ -227,9 +227,10 @@ def _get_hl_gap(res: object) -> float:
     >>> print(f"{gap:.3f}")  # Check with 3 decimal places for doctest
     8.163
     """
-    eigenvalues = res.get_orbital_eigenvalues()
-    occupations = res.get_orbital_occupations()
-    threshold = 1e-2
+    eigenvalues = res.get_orbital_eigenvalues() # type: ignore[attr-defined]
+    occupations = res.get_orbital_occupations() # type: ignore[attr-defined]
+    threshold = 1e-2 # might be risky at higher electronic temperatures
+    gap: float  # Initialize gap
 
     for num, (eigenvalue, occupation) in enumerate(zip(eigenvalues, occupations)):
         if occupation < threshold:
