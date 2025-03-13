@@ -25,6 +25,7 @@ pre-commit
 pylint
 pytest
 pytest-cov
+pytest-env
 pytest-runner
 pep8-naming
 pyupgrade
