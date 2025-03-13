@@ -22,7 +22,7 @@ def cli():
     This is the main entry point for the command-line interface.
     It defines a group of commands.
     """
-    pass # pragma: no cover
+    pass  # pragma: no cover
 
 
 @cli.command(name="HLgap")
@@ -148,7 +148,9 @@ def get_hl_gap(
         write_output_fail(dbid, "???", "???", smile)
         return "???"
     else:
-        gap = calculate_gap(molecule=confs, method=method, accuracy=accuracy, temperature=eltemp)
+        gap = calculate_gap(
+            molecule=confs, method=method, accuracy=accuracy, temperature=eltemp
+        )
         end_time = time.time()
         delta_time = end_time - start_time
         print(
@@ -159,5 +161,5 @@ def get_hl_gap(
         return gap
 
 
-if __name__ == "__main__": # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
     cli()

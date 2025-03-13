@@ -54,10 +54,19 @@ def _get_dict(entry: list) -> Dict[str, str]:
     data = {}
     data["2dsdf"] = entry[0].splitlines()
     try:
-        data.update({key.replace("<", "").strip(): value.strip() for key, value in (item.replace("\n", "").split(">", 1) for item in entry[1:])})
+        data.update(
+            {
+                key.replace("<", "").strip(): value.strip()
+                for key, value in (
+                    item.replace("\n", "").split(">", 1) for item in entry[1:]
+                )
+            }
+        )
     except (ValueError, IndexError) as e:
-        print(f"Error parsing SDF entry: {entry}, Error: {e}")  # More informative error message
-        return {} #Return empty dictionary in case of error instead of crashing.
+        print(
+            f"Error parsing SDF entry: {entry}, Error: {e}"
+        )  # More informative error message
+        return {}  # Return empty dictionary in case of error instead of crashing.
 
     return data
 
@@ -275,10 +284,13 @@ def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
     min_free_energy = min(energy.values())
 
     for e in energy.values():
-        boltzmann_sum += math.exp(-((e - min_free_energy) * Hartree) / (kB * temperature))
+        boltzmann_sum += math.exp(
+            -((e - min_free_energy) * Hartree) / (kB * temperature)
+        )
 
     boltzmann_weights = {
-        n: math.exp(-((e - min_free_energy) * Hartree) / (kB * temperature)) / boltzmann_sum
+        n: math.exp(-((e - min_free_energy) * Hartree) / (kB * temperature))
+        / boltzmann_sum
         for n, e in enumerate(energy.values())
     }
 
@@ -288,7 +300,9 @@ def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
     return gap_weighted
 
 
-def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature: float) -> float:
+def calculate_gap(
+    molecule: Chem.Mol, method: str, accuracy: float, temperature: float
+) -> float:
     """Calculates the Boltzmann-weighted HOMO-LUMO gap of a molecule.
 
     Performs xTB calculations on multiple conformers of the input molecule,
@@ -345,11 +359,19 @@ def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature:
     for conformer_id in range(molecule.GetNumConformers()):
         mol_block = Chem.MolToMolBlock(molecule, confId=conformer_id)
 
-        if method == "GFN0-xTB" or method == "GFN1-xTB" or method == "GFN2-xTB" or method == "IPEA-xTB":
-            try: #Added try-except block here.
+        if (
+            method == "GFN0-xTB"
+            or method == "GFN1-xTB"
+            or method == "GFN2-xTB"
+            or method == "IPEA-xTB"
+        ):
+            try:  # Added try-except block here.
                 mol_ase = io.read(StringIO(mol_block), format="mol")
                 mol_ase.calc = XTB(
-                    method=method, accuracy=accuracy, electronic_temperature=temperature, max_iterations=300
+                    method=method,
+                    accuracy=accuracy,
+                    electronic_temperature=temperature,
+                    max_iterations=300,
                 )
                 optimizer = BFGS(mol_ase, trajectory=None, logfile=None)
                 optimizer.run(fmax=1.0e-03 * mol_ase.get_global_number_of_atoms())

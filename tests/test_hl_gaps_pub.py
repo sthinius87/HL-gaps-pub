@@ -12,10 +12,12 @@ import pandas as pd
 import os
 from rdkit import Chem
 from rdkit.Chem import AllChem
+
 # from hl_gaps_pub import hl_gaps_pub
 from hl_gaps_pub import cli, hl_gaps_pub
 from hl_gaps_pub.hl_gaps_pub import calculate_gap, _get_dict, embed_confs
 from hl_gaps_pub import __version__
+
 
 @pytest.fixture
 def response() -> None:
@@ -40,14 +42,10 @@ def _cli_runner_check_result(result: Result, expect_error: bool = False) -> None
 
     elif result.exit_code != 0:
         msg_stderr = (
-            f"\nstderr=\n{result.stderr}\n"
-            if result.stderr_bytes is not None
-            else ""
+            f"\nstderr=\n{result.stderr}\n" if result.stderr_bytes is not None else ""
         )
         msg_stdout = (
-            f"\nstdout=\n{result.stdout}\n"
-            if result.stdout_bytes is not None
-            else ""
+            f"\nstdout=\n{result.stdout}\n" if result.stdout_bytes is not None else ""
         )
         raise RuntimeError(msg_stderr + msg_stdout) from result.exception
 
@@ -57,6 +55,7 @@ def _cli_runner_check_result(result: Result, expect_error: bool = False) -> None
 def test_version():
     """Test the version of the package."""
     assert __version__ == "0.1.0"
+
 
 def test_command_line_interface() -> None:
     """Test the CLI."""
@@ -73,18 +72,21 @@ def test_command_line_interface() -> None:
     assert "--dbid" in result.output
     assert "--help" in result.output
 
+
 # Helper function to check result (good practice for reusability)
 def _cli_runner_check_result(result):
     """Check result of click runner."""
     if result.exit_code != 0:
         print(result.output)
         from pprint import pprint
+
         pprint(vars(result))
         print(result.exception)
         assert False, "cli failed : %s" % str(result.exception)
 
+
 # --- Test Function ---
-#@pytest.mark.slow  # Keep the slow marker
+# @pytest.mark.slow  # Keep the slow marker
 def test_command_line_interface_with_args(tmp_path):
     """Test the HLgap CLI command with specific arguments."""
 
@@ -93,7 +95,9 @@ def test_command_line_interface_with_args(tmp_path):
     # Get the directory of the *current* test file (tests/test_hl_gaps_pub.py)
     current_file_dir = Path(__file__).parent
     # Construct the path to the data directory, relative to the test file
-    db_path = str(current_file_dir.parent / "data" / "test")  # Go up one level, then into data/test
+    db_path = str(
+        current_file_dir.parent / "data" / "test"
+    )  # Go up one level, then into data/test
     db_basename = "test.SDF"  # Correct basename
     db_id = "0"
     n_confs = "5"  # Use string, as Click passes strings
@@ -103,11 +107,15 @@ def test_command_line_interface_with_args(tmp_path):
     result = runner.invoke(
         cli.get_hl_gap,
         [
-            "-pa", db_path,
-            "-na", db_basename,
-            "-id", db_id,
-            "-nc", n_confs,
-        ]
+            "-pa",
+            db_path,
+            "-na",
+            db_basename,
+            "-id",
+            db_id,
+            "-nc",
+            n_confs,
+        ],
     )
 
     # Check for successful execution
@@ -137,6 +145,7 @@ def test_command_line_interface_with_args(tmp_path):
     # clean up the output file to avoid cluttering the project directory.
     output_file.unlink()  # Delete the file
 
+
 # --- Test Function ---
 def test_command_line_interface_no_confs():
     """Test the HLgap CLI command with no conformers."""
@@ -152,11 +161,15 @@ def test_command_line_interface_no_confs():
     result = runner.invoke(
         cli.get_hl_gap,
         [
-            "-pa", db_path,
-            "-na", db_basename,
-            "-id", db_id,
-            "-nc", n_confs,
-        ]
+            "-pa",
+            db_path,
+            "-na",
+            db_basename,
+            "-id",
+            db_id,
+            "-nc",
+            n_confs,
+        ],
     )
 
     # Check for successful execution
@@ -166,10 +179,9 @@ def test_command_line_interface_no_confs():
     # --- Assertions ---
 
     # Check output file exists
-    output_file = Path(f"results_{db_id}.raw") 
+    output_file = Path(f"results_{db_id}.raw")
     assert output_file.exists()
     output_file.unlink()  # Delete the file
-
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -182,11 +194,10 @@ def set_xtb_path():
     if original_xtbpath:
         os.environ["XTBPATH"] = original_xtbpath
     else:
-        del os.environ["XTBPATH"] # Or os.unsetenv("XTBPATH") on some systems
-
-
+        del os.environ["XTBPATH"]  # Or os.unsetenv("XTBPATH") on some systems
 
     # --- Test Function ---
+
 
 @pytest.mark.parametrize(
     "method", ["GFN0-xTB", "GFN1-xTB", "GFN2-xTB", "IPEA-xTB"]  # Valid methods
@@ -214,11 +225,17 @@ def test_calculate_gap_invalid_method():
     with pytest.raises(ValueError, match="Unknown method: GFEA-xTB"):
         calculate_gap(mol_with_hs, "GFEA-xTB", 1.0, 300.0)
 
+
 def test_calculate_gap_no_conformers():
     """Test calculate_gap with a molecule that has no conformers."""
-    mol = Chem.MolFromSmiles("CC")  # Create a molecule *without* embedding any conformers
-    with pytest.raises(TypeError, match="Molecule must have conformers for gap calculation."):
+    mol = Chem.MolFromSmiles(
+        "CC"
+    )  # Create a molecule *without* embedding any conformers
+    with pytest.raises(
+        TypeError, match="Molecule must have conformers for gap calculation."
+    ):
         calculate_gap(mol, "GFN2-xTB", 1.0, 300.0)
+
 
 @pytest.fixture
 def molecule_with_conformer():
@@ -228,19 +245,25 @@ def molecule_with_conformer():
     AllChem.EmbedMolecule(mol, AllChem.ETKDGv3())
     return mol
 
+
 def test_calculate_gap_xtb_failure(molecule_with_conformer):
     """Test calculate_gap when the xTB calculation raises RuntimeError."""
-    with patch('xtb.interface.Calculator.singlepoint') as mock_singlepoint, \
-          patch('hl_gaps_pub.hl_gaps_pub._boltzmann_weight', return_value=1.23),\
-          patch('hl_gaps_pub.hl_gaps_pub._get_hl_gap', return_value = 1.00): #Mock to avoid calling other functions
+    with patch("xtb.interface.Calculator.singlepoint") as mock_singlepoint, patch(
+        "hl_gaps_pub.hl_gaps_pub._boltzmann_weight", return_value=1.23
+    ), patch(
+        "hl_gaps_pub.hl_gaps_pub._get_hl_gap", return_value=1.00
+    ):  # Mock to avoid calling other functions
 
         # Set up the mock to raise a RuntimeError
         mock_singlepoint.side_effect = Exception("Simulated xTB failure")
 
-        with pytest.raises(RuntimeError, match="xTB calculation failed: Simulated xTB failure"):
+        with pytest.raises(
+            RuntimeError, match="xTB calculation failed: Simulated xTB failure"
+        ):
             calculate_gap(molecule_with_conformer, "GFN2-xTB", 1.0, 300.0)
 
         mock_singlepoint.assert_called_once()
+
 
 def test_get_dict_valid():
     """Test _get_dict with a valid SDF entry."""
@@ -252,11 +275,13 @@ def test_get_dict_valid():
     }
     assert _get_dict(entry) == expected
 
+
 def test_get_dict_empty():
     """Test _get_dict with an empty entry."""
     entry = [""]
     expected = {"2dsdf": []}
     assert _get_dict(entry) == expected
+
 
 def test_get_dict_value_error():
     """Test _get_dict with an entry that causes a ValueError."""
@@ -264,41 +289,52 @@ def test_get_dict_value_error():
     result = _get_dict(entry)
     assert result == {}  # Should return an *empty* dictionary on error
 
+
 def test_get_dict_index_error():
     """Test _get_dict with an entry that causes an IndexError."""
     entry = ["First line", "<Invalid>Entry>With>Too>Many>Splits"]
     result = _get_dict(entry)
     expected = {
         "2dsdf": ["First line"],
-        "Invalid": "Entry>With>Too>Many>Splits"  # Expected result
+        "Invalid": "Entry>With>Too>Many>Splits",  # Expected result
     }
     assert result == expected
+
 
 def test_embed_confs_invalid_smiles():
     # An invalid SMILES string to trigger the exception block
     invalid_smiles = "InvalidSMILES"
     num_confs = 5
-    
+
     mol = embed_confs(invalid_smiles, num_confs)
-    
+
     # The fallback molecule should be methane (CH4)
     assert mol is not None
     assert Chem.MolToSmiles(Chem.RemoveHs(mol)) == "C"
-    assert mol.GetNumConformers() >= 0  # It may still have 0 conformers if embedding fails
+    assert (
+        mol.GetNumConformers() >= 0
+    )  # It may still have 0 conformers if embedding fails
+
 
 def test_embed_confs_embedding_failure():
     """Test embed_confs when EmbedMultipleConfs fails."""
     # SMILES that is likely to cause embedding failure.
 
-    with patch('rdkit.Chem.AllChem.EmbedMultipleConfs') as mock_embed, \
-        contextlib.redirect_stdout(io.StringIO()) as stdout_capture:  # Capture stdout
+    with patch(
+        "rdkit.Chem.AllChem.EmbedMultipleConfs"
+    ) as mock_embed, contextlib.redirect_stdout(
+        io.StringIO()
+    ) as stdout_capture:  # Capture stdout
 
         # First call raises exception, second call returns 0
         mock_embed.side_effect = [Exception("Simulated embedding failure"), 0]
 
-        mol = embed_confs("CC", num_confs=5) # Valid SMILES now
+        mol = embed_confs("CC", num_confs=5)  # Valid SMILES now
 
         assert "Simulated embedding failure" in stdout_capture.getvalue()
-        assert "Embedding failed: starting with random coordinates" in stdout_capture.getvalue()
-        assert mol.GetNumConformers() >= 0 # >=0 after fallback
-        assert mock_embed.call_count == 2 # Ensure its called twice.
+        assert (
+            "Embedding failed: starting with random coordinates"
+            in stdout_capture.getvalue()
+        )
+        assert mol.GetNumConformers() >= 0  # >=0 after fallback
+        assert mock_embed.call_count == 2  # Ensure its called twice.
