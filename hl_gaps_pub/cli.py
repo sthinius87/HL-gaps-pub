@@ -102,40 +102,40 @@ def get_hl_gap(
 ) -> Union[float, str]:
     """Calculates the HOMO-LUMO gap for a given database entry.
 
-    This command takes a database file and entry ID, extracts the SMILES
-    string, generates conformers, performs an xTB calculation, and
-    returns the Boltzmann-weighted HOMO-LUMO gap.
+        This command takes a database file and entry ID, extracts the SMILES
+        string, generates conformers, performs an xTB calculation, and
+        returns the Boltzmann-weighted HOMO-LUMO gap.
 
-    Parameters
-    ----------
-    dbpath : str
-        Path to the directory containing the SDF database file.
-    dbbasename : str
-        Basename of the SDF database file.
-    dbid : int
-        ID of the entry within the SDF database.
-    nconfs : int
-        Number of conformers to generate and average over.
-    accuracy : float
-        SCF convergence accuracy for the xTB calculation.
-    eltemp : float
-        Electronic temperature (in Kelvin) for the xTB calculation.
-    method : str
-        The xTB method to use (e.g., "GFN2-xTB").
+        Parameters
+        ----------
+        dbpath : str
+            Path to the directory containing the SDF database file.
+        dbbasename : str
+            Basename of the SDF database file.
+        dbid : int
+            ID of the entry within the SDF database.
+        nconfs : int
+            Number of conformers to generate and average over.
+        accuracy : float
+            SCF convergence accuracy for the xTB calculation.
+        eltemp : float
+            Electronic temperature (in Kelvin) for the xTB calculation.
+        method : str
+            The xTB method to use (e.g., "GFN2-xTB").
 
-    Returns
-    -------
-    float or str
-        The calculated Boltzmann-weighted HOMO-LUMO gap in eV, or "???"
-        if the calculation fails.
+        Returns
+        -------
+        float or str
+            The calculated Boltzmann-weighted HOMO-LUMO gap in eV, or "???"
+            if the calculation fails.
 
-    Examples
-    --------
-    >>> # Assuming you have a file '0_COCONUT_2022_01_2D.SDF' in './data'
-    >>> result = get_hl_gap(dbpath="./data",
-+    ...                      dbbasename="COCONUT_2022_01_2D.SDF", dbid=0,
-+    ...                      nconfs=5, accuracy=0.1, eltemp=300.0, method="GFN2-xTB")
-    >>> print(result)  # doctest: +SKIP
+        Examples
+        --------
+        >>> # Assuming you have a file '0_COCONUT_2022_01_2D.SDF' in './data'
+        >>> result = get_hl_gap(dbpath="./data",
+    +    ...                      dbbasename="COCONUT_2022_01_2D.SDF", dbid=0,
+    +    ...                      nconfs=5, accuracy=0.1, eltemp=300.0, method="GFN2-xTB")
+        >>> print(result)  # doctest: +SKIP
     """
     start_time = time.time()
     db_file = Path(dbpath) / f"{dbid}_{dbbasename}"

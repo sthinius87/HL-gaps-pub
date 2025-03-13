@@ -34,7 +34,7 @@ def response() -> None:
 #     # assert 'GitHub' in BeautifulSoup(response.content).title.string
 
 
-#def _cli_runner_check_result(result: Result, expect_error: bool = False) -> None:
+# def _cli_runner_check_result(result: Result, expect_error: bool = False) -> None:
 #    """Helper function for checking the cli-runner result."""
 #    if expect_error:
 #        assert result.exit_code != 0
