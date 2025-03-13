@@ -227,9 +227,9 @@ def _get_hl_gap(res: object) -> float:
     >>> print(f"{gap:.3f}")  # Check with 3 decimal places for doctest
     8.163
     """
-    eigenvalues = res.get_orbital_eigenvalues() # type: ignore[attr-defined]
-    occupations = res.get_orbital_occupations() # type: ignore[attr-defined]
-    threshold = 1e-2 # might be risky at higher electronic temperatures
+    eigenvalues = res.get_orbital_eigenvalues()  # type: ignore[attr-defined]
+    occupations = res.get_orbital_occupations()  # type: ignore[attr-defined]
+    threshold = 1e-2  # might be risky at higher electronic temperatures
     gap: float  # Initialize gap
 
     for num, (eigenvalue, occupation) in enumerate(zip(eigenvalues, occupations)):
