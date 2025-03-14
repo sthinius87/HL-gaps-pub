@@ -239,10 +239,10 @@ def molecule_with_conformer():
 
 def test_calculate_gap_xtb_failure(molecule_with_conformer):
     """Test calculate_gap when the xTB calculation raises RuntimeError."""
-    with patch("xtb.interface.Calculator.singlepoint") as mock_singlepoint, patch(
-        "hl_gaps_pub.hl_gaps_pub._boltzmann_weight", return_value=1.23
-    ), patch(
-        "hl_gaps_pub.hl_gaps_pub._get_hl_gap", return_value=1.00
+    with (
+        patch("xtb.interface.Calculator.singlepoint") as mock_singlepoint,
+        patch("hl_gaps_pub.hl_gaps_pub._boltzmann_weight", return_value=1.23),
+        patch("hl_gaps_pub.hl_gaps_pub._get_hl_gap", return_value=1.00),
     ):  # Mock to avoid calling other functions
 
         # Set up the mock to raise a RuntimeError
@@ -307,9 +307,10 @@ def test_embed_confs_embedding_failure():
     """Test embed_confs when EmbedMultipleConfs fails."""
     # SMILES that is likely to cause embedding failure.
 
-    with patch("rdkit.Chem.AllChem.EmbedMultipleConfs") as mock_embed, contextlib.redirect_stdout(
-        io.StringIO()
-    ) as stdout_capture:  # Capture stdout
+    with (
+        patch("rdkit.Chem.AllChem.EmbedMultipleConfs") as mock_embed,
+        contextlib.redirect_stdout(io.StringIO()) as stdout_capture,
+    ):  # Capture stdout
 
         # First call raises exception, second call returns 0
         mock_embed.side_effect = [Exception("Simulated embedding failure"), 0]
