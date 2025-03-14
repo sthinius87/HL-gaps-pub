@@ -8,9 +8,17 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "hl_gaps_pub"
 version = "0.1.0"
-description = "A short description of your project"
+description = "High throughput tight binding calculation of electronic HOMO-LUMO gaps and its prediction for natural compounds"
 readme = "README.md"
 requires-python = ">=3.10"
+dependencies = [
+    "click",
+    "environs",
+    "python-dotenv",
+    "pandas",
+    "scikit-learn==1.4.1.post1",
+    "seaborn",
+]
 
 [tool.black]
 line-length = 120
@@ -57,5 +65,6 @@ filterwarnings = [
     "ignore:.*_yaml extension module.*:DeprecationWarning"
 ]
 
+#eventually remove that
 [tool.pytest_env]
 XTBPATH = "/home/sat/miniforge3/envs/py310hl_gaps_pub/share/xtb"

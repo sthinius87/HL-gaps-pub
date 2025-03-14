@@ -32,26 +32,27 @@ jobs:
     needs: lint
     strategy:
       matrix:
-        python-version: ["3.10"]  # "3.9", "3.11", "3.12" - Add more as needed
-
+        python-version: ["3.10"]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v3
         with:
-          python-version: ${{ matrix.python-version }}  # Use matrix variable
+          python-version: ${{ matrix.python-version }}
           environment-file: environment.yml
-          activate-environment: py310hl_gaps_pub  # Consistent env name!
+          activate-environment: py310hl_gaps_pub
           auto-activate-base: false
           channels: conda-forge
           channel-priority: strict
+          cache: true
+      - name: Install project in editable mode
+        run: conda develop . -n py310hl_gaps_pub  #  <-- ADD THIS!
       - name: Run tests with pytest and coverage
-        run: conda run -n py310hl_gaps_pub tox -e py
-      - name: Upload coverage to Codecov  # ADD THIS STEP
+        run: conda run -n py310hl_gaps_pub tox -r -e py
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          # token: ${{ secrets.CODECOV_TOKEN }}  # Uncomment if you have a token
-          file: ./coverage.xml  # Correct path to coverage report
+          file: ./coverage.xml
           fail_ci_if_error: true
 
   build-docs:
