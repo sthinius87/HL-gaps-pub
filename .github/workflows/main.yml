@@ -24,8 +24,8 @@ jobs:
           auto-activate-base: false  # Good practice
           channels: conda-forge  # Specify conda-forge channel
           channel-priority: strict  # Enforce strict channel priority
-      - name: Install tox
-        run: conda run -n py310hl_gaps_pub pip install tox
+#      - name: Install tox
+#        run: conda run -n py310hl_gaps_pub pip install tox
       - name: Run linters
         run: conda run -n py310hl_gaps_pub tox -e flake8,black,mypy
 
@@ -46,12 +46,12 @@ jobs:
           auto-activate-base: false
           channels: conda-forge
           channel-priority: strict
-      - name: Install pip prod dependencies  # Add this step!
-        run: conda run -n py310hl_gaps_pub pip install -r requirements/prod.txt
-      - name: Install pip dev dependencies  # Add this step!
-        run: conda run -n py310hl_gaps_pub pip install -r requirements/dev.txt
-      - name: Install tox
-        run: conda run -n py310hl_gaps_pub pip install tox
+ #     - name: Install pip prod dependencies  # Add this step!
+ #       run: conda run -n py310hl_gaps_pub pip install -r requirements/prod.txt
+ #     - name: Install pip dev dependencies  # Add this step!
+ #       run: conda run -n py310hl_gaps_pub pip install -r requirements/dev.txt
+ #     - name: Install tox
+ #       run: conda run -n py310hl_gaps_pub pip install tox
       - name: Run tests with pytest and coverage
         run: conda run -n py310hl_gaps_pub tox -e py
       - name: Upload coverage to Codecov # ADD THIS STEP
@@ -75,8 +75,8 @@ jobs:
           auto-activate-base: false
           channels: conda-forge
           channel-priority: strict
-      - name: Install tox
-        run: conda run -n py310hl_gaps_pub pip install tox
+#      - name: Install tox
+#        run: conda run -n py310hl_gaps_pub pip install tox
       - name: Build documentation
         run: conda run -n py310hl_gaps_pub tox -e docs
       - name: Upload documentation artifact  # Upload as artifact

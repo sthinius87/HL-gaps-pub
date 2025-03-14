@@ -14,6 +14,41 @@ dependencies:
   - seaborn
   - xtb
   - xtb-python
-  - pip:
-    - -r requirements/prod.txt
-    - -r requirements/dev.txt
+  - click
+  - environs
+  - python-dotenv
+  - anybadge
+  - black
+  - bump2version
+  - devtools
+  - distlib
+  - docutils
+  - flake8
+  - flake8-blind-except
+  - flake8-debugger
+  - flake8-docstrings
+  - flake8-isort
+  - flake8-bugbear
+  - furo
+  - ipykernel
+  - ipython
+  - ipython-genutils
+  - isort
+  - mypy
+  - nbsphinx
+  - nbstripout
+  - pre-commit
+  - pylint
+  - pytest
+  - pytest-cov
+  - pytest-env
+  - pytest-runner
+  - pep8-naming
+  - pyupgrade
+  - Sphinx
+  - sphinx-click
+  - sphinx-copybutton
+  - sphinx-tabs
+  - sphinxcontrib-bibtex
+  - tox
+  - tox-conda
