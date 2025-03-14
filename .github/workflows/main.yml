@@ -25,7 +25,7 @@ jobs:
           channels: conda-forge  # Specify conda-forge channel
           channel-priority: strict  # Enforce strict channel priority
       - name: Run linters
-        run: conda run -n py310hl_gaps_pub tox -e flake8,black,mypy
+        run: tox -e flake8,black,mypy
 
   test:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
           channels: conda-forge
           channel-priority: strict
       - name: Run tests with pytest and coverage
-        run: conda run -n py310hl_gaps_pub tox -e py  #  Use tox-conda!
+        run: tox -e py
       - name: Upload coverage to Codecov  # ADD THIS STEP
         uses: codecov/codecov-action@v4
         with:
@@ -69,7 +69,7 @@ jobs:
           channels: conda-forge
           channel-priority: strict
       - name: Build documentation
-        run: conda run -n py310hl_gaps_pub tox -e docs
+        run: tox -e docs
       - name: Upload documentation artifact  # Upload as artifact
         uses: actions/upload-artifact@v3
         with:
