@@ -2,53 +2,51 @@ name: py310hl_gaps_pub
 channels:
   - conda-forge
 dependencies:
-  - ase
-  - ipython
-  - missingno
-  - notebook
-  - pandas
-  - pip
-  - python=3.10
-  - rdkit
-  - scikit-learn=1.4.1.post1
-  - seaborn
-  - xtb
-  - xtb-python
-  - click
-  - environs
-  - python-dotenv
+  - Sphinx
   - anybadge
+  - ase
   - black
   - bump2version
+  - click
   - devtools
   - distlib
   - docutils
+  - environs
   - flake8
   - flake8-blind-except
+  - flake8-bugbear
   - flake8-debugger
   - flake8-docstrings
   - flake8-isort
-  - flake8-bugbear
   - furo
   - ipykernel
   - ipython
-  - ipython-genutils
   - isort
+  - missingno
   - mypy
-  - nbsphinx
   - nbstripout
+  - nbsphinx
+  - notebook
+  - pandas
+  - pep8-naming
+  - pip
   - pre-commit
   - pylint
+  - pyupgrade
   - pytest
   - pytest-cov
   - pytest-env
   - pytest-runner
-  - pep8-naming
-  - pyupgrade
-  - Sphinx
+  - python=3.10
+  - python-dotenv
+  - rdkit
+  - scikit-learn=1.4.1.post1
+  - seaborn
   - sphinx-click
   - sphinx-copybutton
   - sphinx-tabs
   - sphinxcontrib-bibtex
   - tox
   - tox-conda
+  - xtb
+  - xtb-python
