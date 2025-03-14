@@ -144,16 +144,11 @@ def get_hl_gap(
     confs = embed_confs(smile=smile, num_confs=nconfs)
 
     if confs.GetNumConformers() == 0:
-        print(
-            f"ERROR ID {dbid:2d} with {confs.GetNumConformers():2d} conformers"
-            f" and HL-gap ??? eV in ??? s"
-        )
+        print(f"ERROR ID {dbid:2d} with {confs.GetNumConformers():2d} conformers" f" and HL-gap ??? eV in ??? s")
         write_output_fail(dbid, "???", "???", smile)
         return "???"
     else:
-        gap = calculate_gap(
-            molecule=confs, method=method, accuracy=accuracy, temperature=eltemp
-        )
+        gap = calculate_gap(molecule=confs, method=method, accuracy=accuracy, temperature=eltemp)
         end_time = time.time()
         delta_time = end_time - start_time
         print(

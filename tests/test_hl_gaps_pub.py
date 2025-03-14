@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest  # noqa: F401
-from click.testing import CliRunner, Result
+from click.testing import CliRunner
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
@@ -81,7 +81,7 @@ def _cli_runner_check_result(result):
 
         pprint(vars(result))
         print(result.exception)
-        assert False, "cli failed : %s" % str(result.exception)
+        raise AssertionError(f"CLI exited with code {result.exit_code}, expected 0. Exception: {result.exception}")
 
 
 # --- Test Function ---
@@ -94,9 +94,7 @@ def test_command_line_interface_with_args(tmp_path):
     # Get the directory of the *current* test file (tests/test_hl_gaps_pub.py)
     current_file_dir = Path(__file__).parent
     # Construct the path to the data directory, relative to the test file
-    db_path = str(
-        current_file_dir.parent / "data" / "test"
-    )  # Go up one level, then into data/test
+    db_path = str(current_file_dir.parent / "data" / "test")  # Go up one level, then into data/test
     db_basename = "test.SDF"  # Correct basename
     db_id = "0"
     n_confs = "5"  # Use string, as Click passes strings
@@ -198,9 +196,7 @@ def set_xtb_path():
     # --- Test Function ---
 
 
-@pytest.mark.parametrize(
-    "method", ["GFN0-xTB", "GFN1-xTB", "GFN2-xTB", "IPEA-xTB"]  # Valid methods
-)
+@pytest.mark.parametrize("method", ["GFN0-xTB", "GFN1-xTB", "GFN2-xTB", "IPEA-xTB"])  # Valid methods
 def test_calculate_gap_valid_methods(method):
     """Tests calculate_gap with valid xTB methods."""
     mol = Chem.MolFromSmiles("CC")
@@ -227,12 +223,8 @@ def test_calculate_gap_invalid_method():
 
 def test_calculate_gap_no_conformers():
     """Test calculate_gap with a molecule that has no conformers."""
-    mol = Chem.MolFromSmiles(
-        "CC"
-    )  # Create a molecule *without* embedding any conformers
-    with pytest.raises(
-        TypeError, match="Molecule must have conformers for gap calculation."
-    ):
+    mol = Chem.MolFromSmiles("CC")  # Create a molecule *without* embedding any conformers
+    with pytest.raises(TypeError, match="Molecule must have conformers for gap calculation."):
         calculate_gap(mol, "GFN2-xTB", 1.0, 300.0)
 
 
@@ -256,9 +248,7 @@ def test_calculate_gap_xtb_failure(molecule_with_conformer):
         # Set up the mock to raise a RuntimeError
         mock_singlepoint.side_effect = Exception("Simulated xTB failure")
 
-        with pytest.raises(
-            RuntimeError, match="xTB calculation failed: Simulated xTB failure"
-        ):
+        with pytest.raises(RuntimeError, match="xTB calculation failed: Simulated xTB failure"):
             calculate_gap(molecule_with_conformer, "GFN2-xTB", 1.0, 300.0)
 
         mock_singlepoint.assert_called_once()
@@ -310,18 +300,14 @@ def test_embed_confs_invalid_smiles():
     # The fallback molecule should be methane (CH4)
     assert mol is not None
     assert Chem.MolToSmiles(Chem.RemoveHs(mol)) == "C"
-    assert (
-        mol.GetNumConformers() >= 0
-    )  # It may still have 0 conformers if embedding fails
+    assert mol.GetNumConformers() >= 0  # It may still have 0 conformers if embedding fails
 
 
 def test_embed_confs_embedding_failure():
     """Test embed_confs when EmbedMultipleConfs fails."""
     # SMILES that is likely to cause embedding failure.
 
-    with patch(
-        "rdkit.Chem.AllChem.EmbedMultipleConfs"
-    ) as mock_embed, contextlib.redirect_stdout(
+    with patch("rdkit.Chem.AllChem.EmbedMultipleConfs") as mock_embed, contextlib.redirect_stdout(
         io.StringIO()
     ) as stdout_capture:  # Capture stdout
 
@@ -331,9 +317,6 @@ def test_embed_confs_embedding_failure():
         mol = embed_confs("CC", num_confs=5)  # Valid SMILES now
 
         assert "Simulated embedding failure" in stdout_capture.getvalue()
-        assert (
-            "Embedding failed: starting with random coordinates"
-            in stdout_capture.getvalue()
-        )
+        assert "Embedding failed: starting with random coordinates" in stdout_capture.getvalue()
         assert mol.GetNumConformers() >= 0  # >=0 after fallback
         assert mock_embed.call_count == 2  # Ensure its called twice.

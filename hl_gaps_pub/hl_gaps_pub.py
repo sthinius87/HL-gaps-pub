@@ -16,7 +16,7 @@ from xtb.libxtb import VERBOSITY_MUTED
 
 
 def _get_dict(entry: list[str]) -> Dict[str, Union[str, list[str]]]:
-    """Parses an SDF entry into a dictionary.
+    r"""Parses an SDF entry into a dictionary.
 
     Handles '<' characters and whitespace in keys.  Returns an empty
     dictionary on parsing errors instead of raising an exception.
@@ -54,22 +54,18 @@ def _get_dict(entry: list[str]) -> Dict[str, Union[str, list[str]]]:
         data.update(
             {
                 key.replace("<", "").strip(): value.strip()
-                for key, value in (
-                    item.replace("\n", "").split(">", 1) for item in entry[1:]
-                )
+                for key, value in (item.replace("\n", "").split(">", 1) for item in entry[1:])
             }
         )
     except (ValueError, IndexError) as e:
-        print(
-            f"Error parsing SDF entry: {entry}, Error: {e}"
-        )  # More informative error message
+        print(f"Error parsing SDF entry: {entry}, Error: {e}")  # More informative error message
         return {}  # Return empty dictionary in case of error instead of crashing.
 
     return data
 
 
 def parse_sdf_db(filepath: str) -> pd.DataFrame:
-    """Parses an SDF file into a Pandas DataFrame.
+    r"""Parses an SDF file into a Pandas DataFrame.
 
     Reads an SDF file, splits it into individual entries, parses each
     entry using the `_get_dict` function, and returns a DataFrame.
@@ -128,7 +124,7 @@ def parse_sdf_db(filepath: str) -> pd.DataFrame:
 
 
 def embed_confs(smile: str, num_confs: int) -> Chem.Mol:
-    """Generates multiple 3D conformers for a given SMILES string.
+    r"""Generates multiple 3D conformers for a given SMILES string.
 
     Uses RDKit's EmbedMultipleConfs function with the ETKDGv3 method.
     Handles potential errors during hydrogen addition and embedding,
@@ -167,7 +163,7 @@ def embed_confs(smile: str, num_confs: int) -> Chem.Mol:
     mol = Chem.MolFromSmiles(smile)
     try:
         mol_with_hs = Chem.AddHs(mol)
-    except Exception:
+    except Exception:  # noqa: B902
         print("Could not add H's: writing CH4 dummy")
         mol = Chem.MolFromSmiles("C")
         mol_with_hs = Chem.AddHs(mol)
@@ -175,7 +171,7 @@ def embed_confs(smile: str, num_confs: int) -> Chem.Mol:
     params = AllChem.ETKDGv3()
     try:
         AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=num_confs, params=params)
-    except Exception as e:
+    except Exception as e:  # noqa: B902
         print(e)
 
     if mol_with_hs.GetNumConformers() == 0:
@@ -187,7 +183,7 @@ def embed_confs(smile: str, num_confs: int) -> Chem.Mol:
 
 
 def _get_hl_gap(res: object) -> float:
-    """Calculates the HOMO-LUMO gap from xTB calculation results.
+    r"""Calculates the HOMO-LUMO gap from xTB calculation results.
 
     Iterates through orbital eigenvalues and occupations to find the HOMO
     and LUMO, then calculates the gap in eV.
@@ -232,7 +228,8 @@ def _get_hl_gap(res: object) -> float:
     threshold = 1e-2  # might be risky at higher electronic temperatures
     gap: float  # Initialize gap
 
-    for num, (eigenvalue, occupation) in enumerate(zip(eigenvalues, occupations)):
+    for num, (_eigenvalue, occupation) in enumerate(zip(eigenvalues, occupations)):
+
         if occupation < threshold:
             lumo = eigenvalues[num]
             homo = eigenvalues[num - 1]
@@ -242,7 +239,7 @@ def _get_hl_gap(res: object) -> float:
 
 
 def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
-    """Calculates the Boltzmann-weighted average HOMO-LUMO gap.
+    r"""Calculates the Boltzmann-weighted average HOMO-LUMO gap.
 
     Uses the Boltzmann distribution to weight the HOMO-LUMO gaps of
     different conformers based on their relative energies.
@@ -282,13 +279,10 @@ def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
     min_free_energy = min(energy.values())
 
     for e in energy.values():
-        boltzmann_sum += math.exp(
-            -((e - min_free_energy) * Hartree) / (kB * temperature)
-        )
+        boltzmann_sum += math.exp(-((e - min_free_energy) * Hartree) / (kB * temperature))
 
     boltzmann_weights = {
-        n: math.exp(-((e - min_free_energy) * Hartree) / (kB * temperature))
-        / boltzmann_sum
+        n: math.exp(-((e - min_free_energy) * Hartree) / (kB * temperature)) / boltzmann_sum
         for n, e in enumerate(energy.values())
     }
 
@@ -298,10 +292,8 @@ def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
     return gap_weighted
 
 
-def calculate_gap(
-    molecule: Chem.Mol, method: str, accuracy: float, temperature: float
-) -> float:
-    """Calculates the Boltzmann-weighted HOMO-LUMO gap of a molecule.
+def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature: float) -> float:
+    r"""Calculates the Boltzmann-weighted HOMO-LUMO gap of a molecule.
 
     Performs xTB calculations on multiple conformers of the input molecule,
     calculates the HOMO-LUMO gap for each conformer, and then computes the
@@ -357,12 +349,7 @@ def calculate_gap(
     for conformer_id in range(molecule.GetNumConformers()):
         mol_block = Chem.MolToMolBlock(molecule, confId=conformer_id)
 
-        if (
-            method == "GFN0-xTB"
-            or method == "GFN1-xTB"
-            or method == "GFN2-xTB"
-            or method == "IPEA-xTB"
-        ):
+        if method == "GFN0-xTB" or method == "GFN1-xTB" or method == "GFN2-xTB" or method == "IPEA-xTB":
             try:  # Added try-except block here.
                 mol_ase = io.read(StringIO(mol_block), format="mol")
                 mol_ase.calc = XTB(
@@ -392,7 +379,7 @@ def calculate_gap(
                 energy = result.get_energy()
                 gap = _get_hl_gap(result)
 
-            except Exception as e:
+            except Exception as e:  # noqa: B902
                 raise RuntimeError(f"xTB calculation failed: {e}") from e
 
         else:
@@ -405,7 +392,7 @@ def calculate_gap(
 
 
 def write_output(db_id: int, gap: float, calculation_time: float, smile: str) -> None:
-    """Writes calculation results to a file.
+    r"""Writes calculation results to a file.
 
     Appends a line with the database ID, HOMO-LUMO gap, calculation time,
     and SMILES string to a file named `results_<db_id>.raw`.  Adds a header
@@ -451,7 +438,7 @@ def write_output(db_id: int, gap: float, calculation_time: float, smile: str) ->
 
 
 def write_output_fail(db_id: int, gap: str, calculation_time: str, smile: str) -> None:
-    """Writes failed calculation results to a file.
+    r"""Writes failed calculation results to a file.
 
     Appends a line with the database ID, a placeholder for the gap,
     a placeholder for the calculation time, and the SMILES string to a file
