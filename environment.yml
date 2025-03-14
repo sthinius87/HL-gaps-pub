@@ -16,3 +16,4 @@ dependencies:
   - xtb-python
   - pip:
     - -r requirements/prod.txt
+    - -r requirements/dev.txt
