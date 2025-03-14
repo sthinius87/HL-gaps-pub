@@ -35,5 +35,6 @@ sphinx-copybutton
 sphinx-tabs
 sphinxcontrib-bibtex
 tox
+tox-conda
 
 
