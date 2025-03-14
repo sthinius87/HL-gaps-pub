@@ -18,12 +18,12 @@ jobs:
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v3
         with:
-          python-version: "3.10"  # Default Python version for linting
+          python-version: "3.10"
           environment-file: environment.yml
-          activate-environment: py310hl_gaps_pub  # Consistent env name
-          auto-activate-base: false  # Good practice
-          channels: conda-forge  # Specify conda-forge channel
-          channel-priority: strict  # Enforce strict channel priority
+          activate-environment: py310hl_gaps_pub
+          auto-activate-base: false
+          channels: conda-forge
+          channel-priority: strict
       - name: Run linters
         run: conda run -n py310hl_gaps_pub tox -e flake8,black,mypy
 
@@ -45,8 +45,8 @@ jobs:
           channels: conda-forge
           channel-priority: strict
           cache: true
-      - name: Install project in editable mode
-        run: conda develop . -n py310hl_gaps_pub  #  <-- ADD THIS!
+      - name: Install project in editable mode  # Corrected step!
+        run: conda run -n py310hl_gaps_pub pip install -e .
       - name: Run tests with pytest and coverage
         run: conda run -n py310hl_gaps_pub tox -r -e py
       - name: Upload coverage to Codecov
@@ -69,9 +69,10 @@ jobs:
           auto-activate-base: false
           channels: conda-forge
           channel-priority: strict
+          cache: true
       - name: Build documentation
         run: conda run -n py310hl_gaps_pub tox -e docs
-      - name: Upload documentation artifact  # Upload as artifact
+      - name: Upload documentation artifact
         uses: actions/upload-artifact@v3
         with:
           name: html-docs
