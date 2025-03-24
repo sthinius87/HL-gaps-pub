@@ -73,7 +73,7 @@ warn_unused_ignores = true
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-rs --cov=hl_gaps_pub --cov-report=term --durations=10 --import-mode=importlib"
+addopts = "-rs --cov=hl_gaps_pub --cov-report=term --durations=10 --import-mode=append"
 filterwarnings = [
     "ignore:.*imp module.*:DeprecationWarning",
     "ignore:.*_yaml extension module.*:DeprecationWarning"
