@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-    "setuptools",
+    "setuptools>=61.0",
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
@@ -11,14 +11,33 @@ version = "0.1.0"
 description = "High throughput tight binding calculation of electronic HOMO-LUMO gaps and its prediction for natural compounds"
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [
+  {name = "Sascha Thenius", email = "s.thenius@gmail.com"}, # Put your name
+]
+license = {file = "LICENSE"}  # Correct license format.  You MUST have a LICENSE file
+keywords = ["quantum chemistry", "homo-lumo", "xtb", "orca", "rdkit"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",  # Or your chosen license
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
 dependencies = [
     "click",
     "environs",
     "python-dotenv",
     "pandas",
-    "scikit-learn==1.4.1.post1",
+    "scikit-learn==1.4.1.post1",  # Example - be precise with versions
     "seaborn",
+    "xtb-python",
+    "rdkit-pypi",
 ]
+
+[project.scripts]  # Correct way to define console scripts
+hl-gap = "hl_gaps_pub.cli:get_hl_gap"
 
 [tool.black]
 line-length = 120
@@ -52,10 +71,6 @@ warn_redundant_casts = true
 warn_return_any = true
 warn_unreachable = true
 warn_unused_ignores = true
-
-[tool.pylint.master]
-ignore-paths = ['docs', 'setup.py']
-disable = ['R0801']
 
 [tool.pytest.ini_options]
 minversion = "6.0"
