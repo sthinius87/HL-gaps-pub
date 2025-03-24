@@ -12,14 +12,14 @@ description = "High throughput tight binding calculation of electronic HOMO-LUMO
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
-  {name = "Sascha Thenius", email = "s.thenius@gmail.com"}, # Put your name
+  {name = "Sascha Thinius", email = "sascha.thinius.87@gmail.com"}, 
 ]
-license = {file = "LICENSE"}  # Correct license format.  You MUST have a LICENSE file
+license = {file = "LICENSE"}  
 keywords = ["quantum chemistry", "homo-lumo", "xtb", "orca", "rdkit"]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",  # Or your chosen license
+    "License :: OSI Approved :: MIT License", 
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -30,14 +30,15 @@ dependencies = [
     "environs",
     "python-dotenv",
     "pandas",
-    "scikit-learn==1.4.1.post1",  # Example - be precise with versions
+    "scikit-learn", 
     "seaborn",
+    "xtb"
     "xtb-python",
-    "rdkit-pypi",
+    "rdkit",
 ]
 
-[project.scripts]  # Correct way to define console scripts
-hl-gap = "hl_gaps_pub.cli:get_hl_gap"
+[project.scripts] 
+HLgap = "hl_gaps_pub.cli:get_hl_gap"
 
 [tool.black]
 line-length = 120
