@@ -32,7 +32,7 @@ dependencies = [
     "pandas",
     "scikit-learn", 
     "seaborn",
-    "xtb"
+    "xtb",
     "xtb-python",
     "rdkit",
 ]
