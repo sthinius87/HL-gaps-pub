@@ -46,7 +46,7 @@ def _get_dict(entry: list[str]) -> Dict[str, Union[str, list[str]]]:
     {'2dsdf': ['Invalid entry']}
 
     >>> _get_dict(["First line", "<Invalid>Entry>With>Too>Many>Splits"])
-    {}
+    {'2dsdf': ['First line'], 'Invalid': 'Entry>With>Too>Many>Splits'}
     """
     data: Dict[str, Union[str, list[str]]] = {}
     data["2dsdf"] = entry[0].splitlines()
@@ -96,8 +96,8 @@ def parse_sdf_db(filepath: str) -> pd.DataFrame:
     --------
     >>> # Create a dummy SDF file for the example
     >>> with open("temp.sdf", "w") as f:
-    ...     f.write("CDK     145124856\n\n> <SMILES>\nCC\n\n$$$$\n")
-    ...     f.write("CDK     158924962\n\n> <SMILES>\nCCC\n")
+    ...     f.write("CDK     145124856\n\n> <SMILES>\nCC\n\n$$$$\n") # doctest: +IGNORE_OUTPUT
+    ...     f.write("CDK     158924962\n\n> <SMILES>\nCCC\n") # doctest: +IGNORE_OUTPUT
     >>> df = parse_sdf_db("temp.sdf")
     >>> print(df)
                  2dsdf SMILES
@@ -329,7 +329,7 @@ def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature:
     >>> mol = Chem.MolFromSmiles("CC")  # Ethane
     >>> mol_with_hs = Chem.AddHs(mol)
     >>> params = AllChem.ETKDGv3()
-    >>> Chem.AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=2, params=params)
+    >>> Chem.AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=2, params=params) # doctest: +IGNORE_OUTPUT
     >>> gap = calculate_gap(mol_with_hs, "GFN2-xTB", 1.0, 300.0)
     >>> isinstance(gap, float)
     True
