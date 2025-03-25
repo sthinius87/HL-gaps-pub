@@ -1,9 +1,10 @@
-#hl_gaps_pub/hl_gaps_pub.py
+# hl_gaps_pub/hl_gaps_pub.py
 """Main module for calculating electronic gaps."""
 
 import math
+import subprocess
 from io import StringIO
-from typing import Dict, List, Union, Optional
+from typing import Dict, List, Optional, Union
 
 import numpy as np
 import pandas as pd
@@ -15,7 +16,6 @@ from rdkit.Chem import AllChem
 from xtb.ase.calculator import XTB
 from xtb.interface import Calculator, Param, XTBException
 from xtb.libxtb import VERBOSITY_MUTED
-import subprocess
 
 
 def _get_dict(entry: List[str]) -> Dict[str, Union[str, List[str]]]:
@@ -62,9 +62,7 @@ def _get_dict(entry: List[str]) -> Dict[str, Union[str, List[str]]]:
         data.update(
             {
                 key.replace("<", "").strip(): value.strip()
-                for key, value in (
-                    item.replace("\n", "").split(">", 1) for item in entry[1:]
-                )
+                for key, value in (item.replace("\n", "").split(">", 1) for item in entry[1:])
             }
         )
     except (ValueError, IndexError) as e:
@@ -317,27 +315,18 @@ def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
     min_energy = min(energy.values())
 
     # Calculate relative energies and Boltzmann factors
-    relative_energies = {
-        conf_id: (e - min_energy) * Hartree / (kB * 300)
-        for conf_id, e in energy.items()
-    }
-    boltzmann_factors = {
-        conf_id: math.exp(-rel_e) for conf_id, rel_e in relative_energies.items()
-    }
+    relative_energies = {conf_id: (e - min_energy) * Hartree / (kB * 300) for conf_id, e in energy.items()}
+    boltzmann_factors = {conf_id: math.exp(-rel_e) for conf_id, rel_e in relative_energies.items()}
 
     # Calculate the weighted sum of gaps and the normalization factor
-    weighted_sum = sum(
-        gap[conf_id] * boltzmann_factors[conf_id] for conf_id in gap.keys()
-    )
+    weighted_sum = sum(gap[conf_id] * boltzmann_factors[conf_id] for conf_id in gap.keys())
     normalization_factor = sum(boltzmann_factors.values())
 
     # Calculate the Boltzmann-weighted average gap
     return weighted_sum / normalization_factor
 
 
-def calculate_gap(
-    molecule: Chem.Mol, method: str, accuracy: float, temperature: float
-) -> float:
+def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature: float) -> float:
     r"""Calculates the Boltzmann-weighted HOMO-LUMO gap of a molecule.
 
     Performs xTB calculations on multiple conformers of the input molecule,
@@ -527,7 +516,3 @@ def write_output_fail(db_id: int, gap: str, calculation_time: str, smile: str) -
     with open(f"results_{db_id}.raw", mode="a") as outfile:
         outfile.write("#    ID    GAP   TIME SMILE \n")
         outfile.write(f"{db_id:>6d} {gap:>5s} {calculation_time:>7s} {smile}\n")
-
-
-
-
