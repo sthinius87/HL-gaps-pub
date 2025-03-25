@@ -12,11 +12,14 @@ import pytest  # noqa: F401
 from click.testing import CliRunner
 from rdkit import Chem
 from rdkit.Chem import AllChem
-from xtb.utils import get_params_path
 
 # from hl_gaps_pub import hl_gaps_pub
 from hl_gaps_pub import __version__, cli
-from hl_gaps_pub.hl_gaps_pub import _get_dict, calculate_gap, embed_confs
+from hl_gaps_pub.hl_gaps_pub import (
+    _get_dict,
+    calculate_gap,
+    embed_confs,
+)
 
 # Use absolute paths for data files
 current_file_dir = Path(__file__).resolve().parent
@@ -200,10 +203,6 @@ def set_xtb_path():
         xtb_path = Path(conda_prefix) / "share" / "xtb"
         os.environ["XTBPATH"] = str(xtb_path)
 
-        # *** THE CRITICAL FIX ***
-        # Prepend our XTBPATH to xtb-python's internal search path.
-        os.environ["XTBPATH"] = str(xtb_path) + os.pathsep + get_params_path()
-
     else:
         pytest.skip("CONDA_PREFIX not set, skipping xTB-dependent tests.")
 
@@ -214,7 +213,6 @@ def set_xtb_path():
         os.environ["XTBPATH"] = original_xtbpath
     elif "XTBPATH" in os.environ:
         del os.environ["XTBPATH"]
-    # --- Test Function ---
 
 
 @pytest.mark.parametrize("method", ["GFN0-xTB", "GFN1-xTB", "GFN2-xTB", "IPEA-xTB"])  # Valid methods

@@ -98,8 +98,8 @@ def parse_sdf_db(filepath: str) -> pd.DataFrame:
     >>> with open("temp.sdf", "w") as f:
     ...     f.write("First line\\nSecond line\\n> <Key1> Value1\\n> <Key2> Value2\\n$$$$\\n")
     ...     f.write("Another line\\n> <Key3> Value3\\n$$$$\\n")
-    29
-    25
+    65
+    37
 
     >>> df = parse_sdf_db("temp.sdf")
     >>> print(df)
@@ -157,6 +157,7 @@ def embed_confs(smile: str, num_confs: int) -> Chem.Mol:
 
     >>> # Example of an invalid SMILES (will likely return a methane)
     >>> mol = embed_confs("InvalidSMILES", 5)
+    Could not add H's: writing CH4 dummy
     >>> mol.GetNumConformers() >= 0  # Could be 0 if even methane fails.
     True
     """
