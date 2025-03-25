@@ -45,8 +45,10 @@ jobs:
           channels: conda-forge
           channel-priority: strict
           cache: true
-      - name: Install project in editable mode  # Corrected step!
-        run: conda run -n py310hl_gaps_pub pip install -e .
+      - name: Install package in editable mode
+        run: |
+          cd src
+          conda run -n py310hl_gaps_pub pip install -e .
       - name: Run tests with pytest and coverage
         run: conda run -n py310hl_gaps_pub tox -r -e py
       - name: Upload coverage to Codecov
