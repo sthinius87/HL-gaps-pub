@@ -78,6 +78,8 @@ filterwarnings = [
     "ignore:.*imp module.*:DeprecationWarning",
     "ignore:.*_yaml extension module.*:DeprecationWarning"
 ]
+norecursedirs = ["scripts"]
+testpaths = ["tests", "hl_gaps_pub"]
 
 # Remove this section. Conda handles XTBPATH
 # [tool.pytest_env]
