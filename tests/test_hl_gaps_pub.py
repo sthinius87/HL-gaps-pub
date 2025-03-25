@@ -12,6 +12,7 @@ import pytest  # noqa: F401
 from click.testing import CliRunner
 from rdkit import Chem
 from rdkit.Chem import AllChem
+from xtb.utils import get_params_path
 
 # from hl_gaps_pub import hl_gaps_pub
 from hl_gaps_pub import __version__, cli
@@ -191,16 +192,28 @@ def test_command_line_interface_no_confs():
 
 @pytest.fixture(scope="session", autouse=True)
 def set_xtb_path():
-    """Sets the XTBPATH environment variable before tests run."""
-    original_xtbpath = os.environ.get("XTBPATH")  # Store original value
-    os.environ["XTBPATH"] = "/home/sat/miniforge3/envs/py310hl_gaps_pub/share/xtb"
+    """Sets XTBPATH and, crucially, prepends to xtb's internal parameter search path."""
+    original_xtbpath = os.environ.get("XTBPATH")  # Store original
+
+    conda_prefix = os.environ.get("CONDA_PREFIX")
+    if conda_prefix:
+        xtb_path = pathlib.Path(conda_prefix) / "share" / "xtb"
+        os.environ["XTBPATH"] = str(xtb_path)
+
+        # *** THE CRITICAL FIX ***
+        # Prepend our XTBPATH to xtb-python's internal search path.
+        os.environ["XTBPATH"] = str(xtb_path) + os.pathsep + get_params_path()
+
+    else:
+        pytest.skip("CONDA_PREFIX not set, skipping xTB-dependent tests.")
+
     yield  # This is where the tests will run
-    # Restore original XTBPATH after tests (optional, but good practice)
+
+    # Restore original XTBPATH
     if original_xtbpath:
         os.environ["XTBPATH"] = original_xtbpath
-    else:
-        del os.environ["XTBPATH"]  # Or os.unsetenv("XTBPATH") on some systems
-
+    elif "XTBPATH" in os.environ:
+        del os.environ["XTBPATH"]
     # --- Test Function ---
 
 
