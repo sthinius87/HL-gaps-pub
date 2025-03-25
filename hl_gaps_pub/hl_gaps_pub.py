@@ -472,7 +472,7 @@ def write_output_fail(db_id: int, gap: str, calculation_time: str, smile: str) -
     >>> with open("results_456.raw", "r") as f:
     ...   content = f.read()
     >>> print(content)
-    #    ID     GAP     TIME SMILE
+    #    ID     GAP     TIME SMILE
        456   ???     ??? C
     <BLANKLINE>
 

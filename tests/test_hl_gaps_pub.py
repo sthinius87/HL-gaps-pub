@@ -197,7 +197,7 @@ def set_xtb_path():
 
     conda_prefix = os.environ.get("CONDA_PREFIX")
     if conda_prefix:
-        xtb_path = pathlib.Path(conda_prefix) / "share" / "xtb"
+        xtb_path = Path(conda_prefix) / "share" / "xtb"
         os.environ["XTBPATH"] = str(xtb_path)
 
         # *** THE CRITICAL FIX ***
