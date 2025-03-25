@@ -96,11 +96,8 @@ def parse_sdf_db(filepath: str) -> pd.DataFrame:
     --------
     >>> # Create a dummy SDF file for the example
     >>> with open("temp.sdf", "w") as f:
-    ...     f.write("First line\\nSecond line\\n> <Key1> Value1\\n> <Key2> Value2\\n$$$$\\n")
-    ...     f.write("Another line\\n> <Key3> Value3\\n$$$$\\n")
-    65
-    37
-
+    ...     f.write("CDK     145124856\\n\\n> <SMILES>\\nCC\\n\\n$$$$\\n")
+    ...     f.write("CDK     158924962\\n\\n> <SMILES>\\nCCC\\n\\n$$$$\\n")
     >>> df = parse_sdf_db("temp.sdf")
     >>> print(df)
                                2dsdf     Key1     Key2     Key3
@@ -434,7 +431,7 @@ def write_output(db_id: int, gap: float, calculation_time: float, smile: str) ->
 
     """
     with open(f"results_{db_id}.raw", mode="a") as outfile:
-        outfile.write("#    ID     GAP     TIME SMILE \n")
+        outfile.write("#    ID     GAP     TIME SMILE\n")
         outfile.write(f"{db_id:>6d} {gap:>5.2f} {calculation_time:>7.1f} {smile}\n")
 
 
@@ -481,5 +478,5 @@ def write_output_fail(db_id: int, gap: str, calculation_time: str, smile: str) -
     >>> os.remove("results_456.raw")
     """
     with open(f"results_{db_id}.raw", mode="a") as outfile:
-        outfile.write("#    ID     GAP     TIME SMILE \n")
+        outfile.write("#    ID     GAP     TIME SMILE\n")
         outfile.write(f"{db_id:>6d} {gap:>5s} {calculation_time:>7s} {smile}\n")
