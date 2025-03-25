@@ -39,8 +39,8 @@ def _get_dict(entry: list[str]) -> Dict[str, Union[str, list[str]]]:
 
     Examples
     --------
-    >>> _get_dict(["First line\nSecond line", "<Key1> Value1", "<Key2> Value2"])
-    {'2dsdf': ['First line\nSecond line'], 'Key1': 'Value1', 'Key2': 'Value2'}
+    >>> _get_dict(['CDK     145124856\n', ' <SMILES>\nCC\n\n'])
+    {'2dsdf': ['CDK     145124856'], 'SMILES': 'CC'}
 
     >>> _get_dict(["Invalid entry"])
     {'2dsdf': ['Invalid entry']}
@@ -96,13 +96,13 @@ def parse_sdf_db(filepath: str) -> pd.DataFrame:
     --------
     >>> # Create a dummy SDF file for the example
     >>> with open("temp.sdf", "w") as f:
-    ...     f.write("CDK     145124856\\n\\n> <SMILES>\\nCC\\n\\n$$$$\\n")
-    ...     f.write("CDK     158924962\\n\\n> <SMILES>\\nCCC\\n\\n$$$$\\n")
+    ...     f.write("CDK     145124856\n\n> <SMILES>\nCC\n\n$$$$\n")
+    ...     f.write("CDK     158924962\n\n> <SMILES>\nCCC\n")
     >>> df = parse_sdf_db("temp.sdf")
     >>> print(df)
-                               2dsdf     Key1     Key2     Key3
-    0  [First line, Second line]  Value1  Value2      NaN
-    1             [Another line]     NaN      NaN  Value3
+                 2dsdf SMILES
+    0  [CDK     145124856]     CC
+    1  [CDK     158924962]    CCC
 
     >>> # clean up file
     >>> import os
