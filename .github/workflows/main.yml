@@ -46,7 +46,7 @@ jobs:
           channel-priority: strict
           cache: true
       - name: Install package in editable mode
-        run: conda run -n py310hl_gaps_pub pip install -e ./src
+        run: conda run -n py310hl_gaps_pub pip install -e .
       - name: Run tests with pytest and coverage
         run: conda run -n py310hl_gaps_pub tox -r -e py
       - name: Upload coverage to Codecov
