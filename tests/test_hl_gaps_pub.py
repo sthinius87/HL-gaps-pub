@@ -18,6 +18,16 @@ from hl_gaps_pub import __version__, cli
 from hl_gaps_pub.hl_gaps_pub import _get_dict, calculate_gap, embed_confs
 
 
+
+# Use absolute paths for data files
+current_file_dir = Path(__file__).resolve().parent
+db_path = str(current_file_dir.parent / "data" / "test")
+sdf_path = str(current_file_dir.parent / "data" / "test.sdf")
+sdf_output_path = str(current_file_dir.parent / "data" / "test_output.sdf")
+smiles = "Cc1ccccc1"
+smiles_output_path = str(current_file_dir.parent / "data" / "smiles_output.sdf")
+
+
 @pytest.fixture
 def response() -> None:
     """Sample pytest fixture.
