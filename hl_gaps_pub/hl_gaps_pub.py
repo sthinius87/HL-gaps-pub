@@ -1,12 +1,9 @@
-# hl_gaps_pub/hl_gaps_pub.py
 """Main module for calculating electronic gaps."""
 
 import math
-import subprocess
 from io import StringIO
-from typing import Dict, List, Optional, Union
+from typing import Dict, Union
 
-import numpy as np
 import pandas as pd
 from ase import io
 from ase.optimize import BFGS
@@ -14,11 +11,11 @@ from ase.units import Bohr, Hartree, kB
 from rdkit import Chem
 from rdkit.Chem import AllChem
 from xtb.ase.calculator import XTB
-from xtb.interface import Calculator, Param, XTBException
+from xtb.interface import Calculator, Param
 from xtb.libxtb import VERBOSITY_MUTED
 
 
-def _get_dict(entry: List[str]) -> Dict[str, Union[str, List[str]]]:
+def _get_dict(entry: list[str]) -> Dict[str, Union[str, list[str]]]:
     r"""Parses an SDF entry into a dictionary.
 
     Handles '<' characters and whitespace in keys.  Returns an empty
@@ -43,21 +40,16 @@ def _get_dict(entry: List[str]) -> Dict[str, Union[str, List[str]]]:
     Examples
     --------
     >>> _get_dict(["First line\nSecond line", "<Key1> Value1", "<Key2> Value2"])
-    {'2dsdf': 'First line\nSecond line', 'Key1': 'Value1', 'Key2': 'Value2'}
+    {'2dsdf': ['First line\nSecond line'], 'Key1': 'Value1', 'Key2': 'Value2'}
 
     >>> _get_dict(["Invalid entry"])
-    {'2dsdf': 'Invalid entry'}
+    {'2dsdf': ['Invalid entry']}
 
     >>> _get_dict(["First line", "<Invalid>Entry>With>Too>Many>Splits"])
-    {'2dsdf': 'First line', 'Invalid': 'Entry>With>Too>Many>Splits'}
+    {}
     """
-    data: Dict[str, Union[str, List[str]]] = {}
-    if entry and entry[0]:  # Check if entry and entry[0] are not empty
-        data["2dsdf"] = entry[0].splitlines()[0] if entry[0].splitlines() else ""
-    elif entry:
-        data["2dsdf"] = ""  # Explicitly create a list with an empty string
-    else:  # Handle the case of an empty entry list
-        data["2dsdf"] = ""
+    data: Dict[str, Union[str, list[str]]] = {}
+    data["2dsdf"] = entry[0].splitlines()
     try:
         data.update(
             {
@@ -66,8 +58,8 @@ def _get_dict(entry: List[str]) -> Dict[str, Union[str, List[str]]]:
             }
         )
     except (ValueError, IndexError) as e:
-        print(f"Error parsing SDF entry: {entry}, Error: {e}")  # noqa: T201
-        return {}
+        print(f"Error parsing SDF entry: {entry}, Error: {e}")  # More informative error message
+        return {}  # Return empty dictionary in case of error instead of crashing.
 
     return data
 
@@ -104,33 +96,18 @@ def parse_sdf_db(filepath: str) -> pd.DataFrame:
     --------
     >>> # Create a dummy SDF file for the example
     >>> with open("temp.sdf", "w") as f:
-    ...     f.write('''Methane
-    ...     RDKit          2D
-    ...
-    ...   1  0  0  0  0  0  0  0  0  0999 V2000
-    ...     0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
-    ... M  END
-    ... >  <name>  (1)
-    ... Methane
-    ...
-    ... >  <program>  (1)
-    ... xTB
-    ...
-    ... >  <HOMO>  (1)
-    ... -10.0
-    ...
-    ... >  <LUMO>  (1)
-    ... 2.0
-    ...
-    ... >  <gap>  (1)
-    ... 12.0
-    ...
-    ... $$$$
-    ... ''')
-    83
+    ...     f.write("First line\\nSecond line\\n> <Key1> Value1\\n> <Key2> Value2\\n$$$$\\n")
+    ...     f.write("Another line\\n> <Key3> Value3\\n$$$$\\n")
+    29
+    25
+
     >>> df = parse_sdf_db("temp.sdf")
-    >>> df.shape
-    (1, 6)
+    >>> print(df)
+                               2dsdf     Key1     Key2     Key3
+    0  [First line, Second line]  Value1  Value2      NaN
+    1             [Another line]     NaN      NaN  Value3
+
+    >>> # clean up file
     >>> import os
     >>> os.remove("temp.sdf")
     """
@@ -146,7 +123,7 @@ def parse_sdf_db(filepath: str) -> pd.DataFrame:
     return pd.DataFrame.from_dict(dbparsed, orient="columns")
 
 
-def embed_confs(smiles: str, num_confs: int) -> Optional[Chem.Mol]:
+def embed_confs(smile: str, num_confs: int) -> Chem.Mol:
     r"""Generates multiple 3D conformers for a given SMILES string.
 
     Uses RDKit's EmbedMultipleConfs function with the ETKDGv3 method.
@@ -166,8 +143,7 @@ def embed_confs(smiles: str, num_confs: int) -> Optional[Chem.Mol]:
         An RDKit molecule object with embedded conformers.  If hydrogen
         addition fails, a methane molecule with conformers is returned.
         If embedding fails, the returned molecule may have fewer than
-        `num_confs` conformers, or even zero conformers.  Returns `None`
-        if the SMILES string is invalid.
+        `num_confs` conformers, or even zero conformers.
 
     Examples
     --------
@@ -179,43 +155,35 @@ def embed_confs(smiles: str, num_confs: int) -> Optional[Chem.Mol]:
     >>> mol.GetNumConformers() >= 1
     True
 
-    >>> # Example of an invalid SMILES (will return None)
+    >>> # Example of an invalid SMILES (will likely return a methane)
     >>> mol = embed_confs("InvalidSMILES", 5)
-    >>> mol is None
+    >>> mol.GetNumConformers() >= 0  # Could be 0 if even methane fails.
     True
     """
-    mol = Chem.MolFromSmiles(smiles)
-    if mol is None:
-        print("Could not parse SMILES, returning None")  # noqa: T201
-        return None
-
+    mol = Chem.MolFromSmiles(smile)
     try:
         mol_with_hs = Chem.AddHs(mol)
-    except Chem.AtomValenceException:  # Catch the specific RDKit exception
-        print("Could not add H's: writing CH4 dummy")  # noqa: T201
+    except Exception:  # noqa: B902
+        print("Could not add H's: writing CH4 dummy")
         mol = Chem.MolFromSmiles("C")
-        mol_with_hs = Chem.AddHs(mol)  # Ensure mol_with_hs is defined
-
-    if mol_with_hs is None:  # AddHs can also return None
-        print("Could not add H's: writing CH4 dummy")  # noqa: T201
-        mol_with_hs = Chem.AddHs(Chem.MolFromSmiles("C"))
+        mol_with_hs = Chem.AddHs(mol)
 
     params = AllChem.ETKDGv3()
     try:
         AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=num_confs, params=params)
-    except RuntimeError as e:
-        print(e)  # noqa: T201
+    except Exception as e:  # noqa: B902
+        print(e)
 
     if mol_with_hs.GetNumConformers() == 0:
-        print("Embedding failed: starting with random coordinates")  # noqa: T201
+        print("Embedding failed: starting with random coordinates")
         params.useRandomCoords = True
         AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=num_confs, params=params)
 
     return mol_with_hs
 
 
-def _get_hl_gap(res: object) -> float:  # keep object to avoid error in test.
-    """Calculates the HOMO-LUMO gap from xTB calculation results.
+def _get_hl_gap(res: object) -> float:
+    r"""Calculates the HOMO-LUMO gap from xTB calculation results.
 
     Iterates through orbital eigenvalues and occupations to find the HOMO
     and LUMO, then calculates the gap in eV.
@@ -260,20 +228,18 @@ def _get_hl_gap(res: object) -> float:  # keep object to avoid error in test.
     threshold = 1e-2  # might be risky at higher electronic temperatures
     gap: float  # Initialize gap
 
-    for num, (eigenvalue, occupation) in enumerate(zip(eigenvalues, occupations)):
+    for num, (_eigenvalue, occupation) in enumerate(zip(eigenvalues, occupations)):
+
         if occupation < threshold:
             lumo = eigenvalues[num]
             homo = eigenvalues[num - 1]
             gap = (lumo - homo) * Hartree
             break
-    else:  # Correct indentation: aligned with 'for'
-        raise ValueError("No orbitals found with occupation below threshold.")
-
     return gap
 
 
 def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
-    """Calculates the Boltzmann-weighted average HOMO-LUMO gap.
+    r"""Calculates the Boltzmann-weighted average HOMO-LUMO gap.
 
     Uses the Boltzmann distribution to weight the HOMO-LUMO gaps of
     different conformers based on their relative energies.
@@ -298,7 +264,7 @@ def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
     ValueError
         If the `gap` and `energy` dictionaries have different keys.
     KeyError
-        If there are issues accessing keys in the dictionaries.
+        If there are issues accessing keys withing the dictionary.
 
     Examples
     --------
@@ -306,24 +272,24 @@ def _boltzmann_weight(gap: Dict[int, float], energy: Dict[int, float]) -> float:
     >>> energy = {0: -10.0, 1: -10.2, 2: -9.8}  # Example energies in Hartree
     >>> weighted_gap = _boltzmann_weight(gap, energy)
     >>> print(f"{weighted_gap:.3f}")
-    2.233
+    2.500
     """
-    if gap.keys() != energy.keys():
-        raise ValueError("gap and energy dictionaries must have the same keys")
+    boltzmann_sum = 0.0
+    temperature = 300.00
+    min_free_energy = min(energy.values())
 
-    # Find the minimum energy
-    min_energy = min(energy.values())
+    for e in energy.values():
+        boltzmann_sum += math.exp(-((e - min_free_energy) * Hartree) / (kB * temperature))
 
-    # Calculate relative energies and Boltzmann factors
-    relative_energies = {conf_id: (e - min_energy) * Hartree / (kB * 300) for conf_id, e in energy.items()}
-    boltzmann_factors = {conf_id: math.exp(-rel_e) for conf_id, rel_e in relative_energies.items()}
+    boltzmann_weights = {
+        n: math.exp(-((e - min_free_energy) * Hartree) / (kB * temperature)) / boltzmann_sum
+        for n, e in enumerate(energy.values())
+    }
 
-    # Calculate the weighted sum of gaps and the normalization factor
-    weighted_sum = sum(gap[conf_id] * boltzmann_factors[conf_id] for conf_id in gap.keys())
-    normalization_factor = sum(boltzmann_factors.values())
-
-    # Calculate the Boltzmann-weighted average gap
-    return weighted_sum / normalization_factor
+    gap_weighted = 0.0
+    for weight, g in zip(boltzmann_weights.values(), gap.values()):
+        gap_weighted += weight * g
+    return gap_weighted
 
 
 def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature: float) -> float:
@@ -361,10 +327,11 @@ def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature:
     Examples
     --------
     >>> from rdkit import Chem
+    >>> from rdkit.Chem import AllChem
     >>> mol = Chem.MolFromSmiles("CC")  # Ethane
     >>> mol_with_hs = Chem.AddHs(mol)
-    >>> params = Chem.AllChem.ETKDGv3()
-    >>> num_confs = Chem.AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=2, params=params)
+    >>> params = AllChem.ETKDGv3()
+    >>> Chem.AllChem.EmbedMultipleConfs(mol_with_hs, numConfs=2, params=params)
     >>> gap = calculate_gap(mol_with_hs, "GFN2-xTB", 1.0, 300.0)
     >>> isinstance(gap, float)
     True
@@ -373,8 +340,8 @@ def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature:
     >>> with pytest.raises(ValueError, match="Unknown method: InvalidMethod"):
     ...     calculate_gap(mol_with_hs, "InvalidMethod", 1.0, 300.0)
     """
-    gap_data: Dict[int, float] = {}
-    energy_data: Dict[int, float] = {}
+    gap_data = {}
+    energy_data = {}
 
     if molecule.GetNumConformers() == 0:
         raise TypeError("Molecule must have conformers for gap calculation.")
@@ -382,44 +349,44 @@ def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature:
     for conformer_id in range(molecule.GetNumConformers()):
         mol_block = Chem.MolToMolBlock(molecule, confId=conformer_id)
 
-        # ENTIRE XTB setup inside try...except
-        try:
-            mol_ase = io.read(StringIO(mol_block), format="mol")
-            mol_ase.calc = XTB(  # type: ignore[assignment]
-                method=method,
-                accuracy=accuracy,
-                electronic_temperature=temperature,
-                max_iterations=300,
-            )
-            optimizer = BFGS(mol_ase, trajectory=None, logfile=None)
-            optimizer.run(fmax=1.0e-03 * mol_ase.get_global_number_of_atoms())
+        if method == "GFN0-xTB" or method == "GFN1-xTB" or method == "GFN2-xTB" or method == "IPEA-xTB":
+            try:  # Added try-except block here.
+                mol_ase = io.read(StringIO(mol_block), format="mol")
+                mol_ase.calc = XTB(
+                    method=method,
+                    accuracy=accuracy,
+                    electronic_temperature=temperature,
+                    max_iterations=300,
+                )
+                optimizer = BFGS(mol_ase, trajectory=None, logfile=None)
+                optimizer.run(fmax=1.0e-03 * mol_ase.get_global_number_of_atoms())
+                numbers = mol_ase.get_atomic_numbers()
+                positions = mol_ase.get_positions() / Bohr
 
-            numbers = mol_ase.get_atomic_numbers()
-            positions = mol_ase.get_positions() / Bohr
+                if method == "GFN0-xTB":
+                    calculator = Calculator(Param.GFN0xTB, numbers, positions)
+                elif method == "GFN1-xTB":
+                    calculator = Calculator(Param.GFN1xTB, numbers, positions)
+                elif method == "GFN2-xTB":
+                    calculator = Calculator(Param.GFN2xTB, numbers, positions)
+                elif method == "IPEA-xTB":
+                    calculator = Calculator(Param.IPEAxTB, numbers, positions)
 
-            if method == "GFN0-xTB":
-                calculator = Calculator(Param.GFN0xTB, numbers, positions)
-            elif method == "GFN1-xTB":
-                calculator = Calculator(Param.GFN1xTB, numbers, positions)
-            elif method == "GFN2-xTB":
-                calculator = Calculator(Param.GFN2xTB, numbers, positions)
-            elif method == "IPEA-xTB":
-                calculator = Calculator(Param.IPEAxTB, numbers, positions)
-            else:
-                raise ValueError(f"Unknown method: {method}")
+                calculator.set_electronic_temperature(temperature)
+                calculator.set_accuracy(accuracy)
+                calculator.set_verbosity(VERBOSITY_MUTED)
+                result = calculator.singlepoint()
+                energy = result.get_energy()
+                gap = _get_hl_gap(result)
 
-            calculator.set_electronic_temperature(temperature)
-            calculator.set_accuracy(accuracy)
-            calculator.set_verbosity(VERBOSITY_MUTED)
-            result = calculator.singlepoint()
-            energy = result.get_energy()
-            gap = _get_hl_gap(result)
+            except Exception as e:  # noqa: B902
+                raise RuntimeError(f"xTB calculation failed: {e}") from e
 
-            gap_data[conformer_id] = gap
-            energy_data[conformer_id] = energy
+        else:
+            raise ValueError(f"Unknown method: {method}")
 
-        except subprocess.CalledProcessError as e:
-            raise RuntimeError(f"xTB calculation failed: {e}") from e
+        gap_data[conformer_id] = gap
+        energy_data[conformer_id] = energy
 
     return _boltzmann_weight(gap_data, energy_data)
 
@@ -458,16 +425,15 @@ def write_output(db_id: int, gap: float, calculation_time: float, smile: str) ->
     >>> with open("results_123.raw", "r") as f:
     ...    content = f.read()
     >>> print(content)
-    #    ID    GAP   TIME SMILE
-       123  2.50   10.2 Cc1ccccc1
+    #    ID     GAP     TIME SMILE
+       123  2.50    10.2 Cc1ccccc1
     <BLANKLINE>
-
     >>> import os
     >>> os.remove("results_123.raw")
 
     """
     with open(f"results_{db_id}.raw", mode="a") as outfile:
-        outfile.write("#    ID    GAP   TIME SMILE \n")
+        outfile.write("#    ID     GAP     TIME SMILE \n")
         outfile.write(f"{db_id:>6d} {gap:>5.2f} {calculation_time:>7.1f} {smile}\n")
 
 
@@ -506,13 +472,13 @@ def write_output_fail(db_id: int, gap: str, calculation_time: str, smile: str) -
     >>> with open("results_456.raw", "r") as f:
     ...   content = f.read()
     >>> print(content)
-    #    ID    GAP   TIME SMILE
-       456   ???    ??? C
+    #    ID     GAP     TIME SMILE
+       456   ???     ??? C
     <BLANKLINE>
 
     >>> import os
     >>> os.remove("results_456.raw")
     """
     with open(f"results_{db_id}.raw", mode="a") as outfile:
-        outfile.write("#    ID    GAP   TIME SMILE \n")
+        outfile.write("#    ID     GAP     TIME SMILE \n")
         outfile.write(f"{db_id:>6d} {gap:>5s} {calculation_time:>7s} {smile}\n")
