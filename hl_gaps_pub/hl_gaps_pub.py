@@ -95,9 +95,9 @@ def parse_sdf_db(filepath: str) -> pd.DataFrame:
     Examples
     --------
     >>> # Create a dummy SDF file for the example
-    >>> with open("temp.sdf", "w", encoding="utf-8") as f:
-            num_written1 = f.write("CDK     145124856\n\n> <SMILES>\nCC\n\n$$$$\n")
-            num_written2 = f.write("CDK     158924962\n\n> <SMILES>\nCCC\n\n$$$$\n")
+    >>> with open("temp.sdf", "w", encoding="utf-8") as f: # Added encoding
+    ...     num_written1 = f.write("CDK     145124856\n\n> <SMILES>\nCC\n\n$$$$\n")
+    ...     num_written2 = f.write("CDK     158924962\n\n> <SMILES>\nCCC\n\n$$$$\n")
     >>> print(num_written1)
     39
     >>> print(num_written2)
