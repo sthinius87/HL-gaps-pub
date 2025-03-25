@@ -17,8 +17,6 @@ from rdkit.Chem import AllChem
 from hl_gaps_pub import __version__, cli
 from hl_gaps_pub.hl_gaps_pub import _get_dict, calculate_gap, embed_confs
 
-# from hl_gaps_pub.cli import get_hl_gap
-
 
 @pytest.fixture
 def response() -> None:
