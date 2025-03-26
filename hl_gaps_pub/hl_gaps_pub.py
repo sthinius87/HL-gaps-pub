@@ -335,6 +335,7 @@ def calculate_gap(molecule: Chem.Mol, method: str, accuracy: float, temperature:
     True
 
     >>> # Example of testing the exception for invalid method:
+    >>> import pytest
     >>> with pytest.raises(ValueError, match="Unknown method: InvalidMethod"):
     ...     calculate_gap(mol_with_hs, "InvalidMethod", 1.0, 300.0)
     """
