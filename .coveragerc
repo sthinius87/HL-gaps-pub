@@ -1,3 +1,7 @@
+[run]
+source =
+    hl_gaps_pub
+
 [report]
 exclude_lines =
     pragma: no cover
