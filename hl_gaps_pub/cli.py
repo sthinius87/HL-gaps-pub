@@ -137,7 +137,7 @@ def get_hl_gap(
     +   ...                      dbbasename="COCONUT_2022_01_2D.SDF", dbid=0,
     +   ...                      nconfs=5, accuracy=0.1, eltemp=300.0, method="GFN2-xTB")
     >>> print(result)  # doctest: +SKIP
-    
+
     """
     start_time = time.time()
     db_file = Path(dbpath) / f"{dbid}_{dbbasename}"
