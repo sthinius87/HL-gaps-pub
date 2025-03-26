@@ -70,11 +70,13 @@ jobs:
           auto-activate-base: false
           channels: conda-forge
           channel-priority: strict
-          cache: true
+          # cache: true # Removed cache: true, setup-miniconda handles caching better internally
+      - name: Install tox # Added step to install tox
+        run: conda run -n py310hl_gaps_pub pip install tox tox-conda
       - name: Build documentation
         run: conda run -n py310hl_gaps_pub tox -e docs
       - name: Upload documentation artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # <-- Update to v4
         with:
           name: html-docs
           path: docs/_build/html
