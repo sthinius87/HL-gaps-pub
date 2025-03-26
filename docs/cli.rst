@@ -6,5 +6,5 @@ Entry Points
 ------------
 
 .. click:: hl_gaps_pub.cli:cli
-   :prog: MyScript
+   :prog: HLgap
    :nested: full
