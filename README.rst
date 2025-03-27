@@ -16,7 +16,7 @@ High throughput tight binding calculation of electronic HOMO-LUMO gaps and its p
     :target: https://doi.org/PLACEHOLDER_DOI
     :alt: DOI
 
-.. image:: https://img.shields.io/badge/tox-py3.??? | py3.10-blue.svg
+.. image:: https://img.shields.io/badge/tox-py3.10 | py3.xx-blue.svg
     :target: https://github.com/sthinius87/HL-gaps-pub/blob/main/tox.ini
     :alt: tox environments
 
