@@ -4,6 +4,10 @@ HL-gaps-pub
 
 High throughput tight binding calculation of electronic HOMO-LUMO gaps and its prediction for natural compounds
 
+.. |Build Status| image:: https://github.com/sthinius87/HL-gaps-pub/actions/workflows/main.yml/badge.svg
+    :target: https://github.com/sthinius87/HL-gaps-pub/actions
+    :alt: Build Status
+
 .. image:: https://codecov.io/gh/sthinius87/HL-gaps-pub/graph/badge.svg?token=WFJUQSK6B9 
     :target: https://codecov.io/gh/sthinius87/HL-gaps-pub
     :alt: Build Status
