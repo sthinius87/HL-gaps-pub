@@ -4,20 +4,21 @@ HL-gaps-pub
 
 High throughput tight binding calculation of electronic HOMO-LUMO gaps and its prediction for natural compounds
 
-.. |Build Status| .. image:: https://codecov.io/gh/sthinius87/HL-gaps-pub/graph/badge.svg?token=WFJUQSK6B9 
+.. image:: https://codecov.io/gh/sthinius87/HL-gaps-pub/graph/badge.svg?token=WFJUQSK6B9 
     :target: https://codecov.io/gh/sthinius87/HL-gaps-pub
     :alt: Build Status
-.. |Coverage Status| image:: https://codecov.io/gh/sthinius87/HL-gaps-pub/graph/badge.svg
-    :target: https://app.codecov.io/gh/sthinius87/HL-gaps-pub
-    :alt: Coverage Status
-.. |License| image:: https://img.shields.io/badge/License-MIT-blue.svg
+
+.. image:: https://img.shields.io/badge/License-MIT-blue.svg
     :target: LICENSE
     :alt: License
-.. |DOI| image:: https://img.shields.io/badge/DOI-PLACEHOLDER_DOI-blue.svg
+
+.. image:: https://img.shields.io/badge/DOI-PLACEHOLDER_DOI-blue.svg
     :target: https://doi.org/PLACEHOLDER_DOI
     :alt: DOI
 
-|Build Status| |Coverage Status| |License| |DOI|
+.. image:: https://img.shields.io/badge/tests-tox-blue.svg
+    :target: https://tox.wiki/en/latest/ # Link to tox documentation
+    :alt: tested with tox
 
 .. image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
     :target: https://pycqa.github.io/isort/
