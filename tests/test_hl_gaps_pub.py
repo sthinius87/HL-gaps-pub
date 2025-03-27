@@ -13,6 +13,8 @@ from click.testing import CliRunner
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
+import hl_gaps_pub
+
 # from hl_gaps_pub import hl_gaps_pub
 from hl_gaps_pub import __version__, cli
 from hl_gaps_pub.hl_gaps_pub import (
@@ -20,6 +22,8 @@ from hl_gaps_pub.hl_gaps_pub import (
     calculate_gap,
     embed_confs,
 )
+
+print("Module imported successfully:", hl_gaps_pub)
 
 # Use absolute paths for data files
 current_file_dir = Path(__file__).resolve().parent
