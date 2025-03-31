@@ -112,3 +112,30 @@ replace = 'version="{new_version}"'
 # filename = "docs/conf.py"
 # search = 'release = "{current_version}"'
 # replace = 'release = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "setup.cfg"
+search = 'current_version = {current_version}' # Matches current_version = 0.1.0
+replace = 'current_version = {new_version}'
+# **NOTE:** If 'current_version' in setup.cfg is ACTUALLY part of an *old*
+# bumpversion configuration *within setup.cfg*, you might not need this entry
+# if pyproject.toml is now your main config file. Bumpversion usually updates
+# its own config setting automatically. Double-check the context of this line.
+
+[[tool.bumpversion.files]]
+filename = "README.rst"
+# Matches the specific format within the BibTeX block, including {v...},
+search = 'version = {{v{current_version}}},'
+replace = 'version = {{v{new_version}}},'
+
+[[tool.bumpversion.files]]
+filename = "HISTORY.rst"
+# Matches the version at the start of the line, followed by a space and parenthesis
+# Note: This assumes your latest entry is always at the top or easily findable.
+# It will ONLY replace the version number, not the date.
+search = '^{current_version} \('
+replace = '{new_version} ('
+# **CAUTION:** Automatically bumping HISTORY.rst is often discouraged.
+# It's usually better to update this file manually when writing release notes
+# to ensure the date and changelog entries are correct. Consider removing
+# this block if you prefer manual updates for HISTORY.rst.
