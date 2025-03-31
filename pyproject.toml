@@ -108,10 +108,6 @@ filename = "setup.py"
 search = 'version="{current_version}"'
 replace = 'version="{new_version}"'
 
-# [[tool.bumpversion.files]] # Add this block if you have version in docs/conf.py
-# filename = "docs/conf.py"
-# search = 'release = "{current_version}"'
-# replace = 'release = "{new_version}"'
 
 [[tool.bumpversion.files]]
 filename = "setup.cfg"
@@ -123,18 +119,18 @@ replace = 'current_version = {new_version}'
 # its own config setting automatically. Double-check the context of this line.
 
 [[tool.bumpversion.files]]
+# For README.rst
 filename = "README.rst"
-# Matches the specific format within the BibTeX block, including {v...},
-search = 'version = {{v{current_version}}},'
-replace = 'version = {{v{new_version}}},'
+# Matches the specific Markdown formatting: * **`version`:** v0.1.0
+search = '* **`version`:** v{current_version}'
+replace = '* **`version`:** v{new_version}'
 
 [[tool.bumpversion.files]]
+# For HISTORY.rst
 filename = "HISTORY.rst"
-# Matches the version at the start of the line, followed by a space and parenthesis
-# Note: This assumes your latest entry is always at the top or easily findable.
-# It will ONLY replace the version number, not the date.
-search = '^{current_version} \('
-replace = '{new_version} ('
+# Matches the 'v' prefix, version, space, and opening parenthesis
+search = 'v{current_version} \('
+replace = 'v{new_version} ('
 # **CAUTION:** Automatically bumping HISTORY.rst is often discouraged.
 # It's usually better to update this file manually when writing release notes
 # to ensure the date and changelog entries are correct. Consider removing
