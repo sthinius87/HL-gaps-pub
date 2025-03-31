@@ -102,7 +102,7 @@ If you use this package in your research, please cite it as follows:
 * **`https://zenodo.org/record/PLACEHOLDER_ZENODO_RECORD_ID`:** The link to your Zenodo deposit.
 * **`YOUR NAME(S)`:** Replace this by the author names.
 * **`year`:** The correct Year (Updated to 2025 based on current date).
-* **`version`:** v0.1.0
+* **`version`:** v0.2.0
   
 This improved README provides a good starting point. It clearly explains the project, highlights its key features, and directs users to the detailed documentation for installation and usage instructions. It also includes placeholders for important information like the graphical abstract and citation information. The use of reStructuredText directives (`.. image::`, `.. _HL-gaps-pub:`, `:ref:`) ensures proper formatting and linking within the Sphinx documentation. The inclusion of badges gives a quick overview of project health.
 

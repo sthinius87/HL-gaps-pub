@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hl_gaps_pub"
-version = "0.1.0"
+version = "0.2.0"
 description = "High throughput tight binding calculation of electronic HOMO-LUMO gaps and its prediction for natural compounds"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -86,7 +86,7 @@ testpaths = ["tests", "hl_gaps_pub"]
 # XTBPATH = "/home/sat/miniforge3/envs/py310hl_gaps_pub/share/xtb"
 
 [tool.bumpversion]
-current_version = "0.1.0" # Make sure this matches your ACTUAL current version
+current_version = "0.2.0" # Make sure this matches your ACTUAL current version
 commit = true             # Automatically commit changes
 tag = true                # Automatically create a git tag
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)" # Standard semver parsing
