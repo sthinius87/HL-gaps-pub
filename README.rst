@@ -36,6 +36,10 @@ High throughput tight binding calculation of electronic HOMO-LUMO gaps and its p
     :target: https://github.com/pre-commit/pre-commit
     :alt: pre-commit: enabled
 
+.. image:: https://zenodo.org/badge/938057305.svg
+    :target: https://doi.org/10.5281/zenodo.15113789
+    :alt: Zenodo
+    
 .. image:: placeholder_for_graphical_abstract.png
     :alt: Graphical Abstract
     :width: 600px
