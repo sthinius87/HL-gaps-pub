@@ -111,7 +111,7 @@ replace = 'version="{new_version}"'
 
 [[tool.bumpversion.files]]
 filename = "setup.cfg"
-search = 'current_version = {current_version}' # Matches current_version = 0.1.0
+search = 'current_version = {current_version}' 
 replace = 'current_version = {new_version}'
 # **NOTE:** If 'current_version' in setup.cfg is ACTUALLY part of an *old*
 # bumpversion configuration *within setup.cfg*, you might not need this entry
@@ -121,7 +121,6 @@ replace = 'current_version = {new_version}'
 [[tool.bumpversion.files]]
 # For README.rst
 filename = "README.rst"
-# Matches the specific Markdown formatting: * **`version`:** v0.1.0
 search = '* **`version`:** v{current_version}'
 replace = '* **`version`:** v{new_version}'
 
