@@ -39,7 +39,7 @@ High throughput tight binding calculation of electronic HOMO-LUMO gaps and its p
 .. image:: https://zenodo.org/badge/938057305.svg
     :target: https://doi.org/10.5281/zenodo.15113789
     :alt: Zenodo
-    
+
 .. image:: placeholder_for_graphical_abstract.png
     :alt: Graphical Abstract
     :width: 600px
@@ -88,28 +88,14 @@ If you use this package in your research, please cite it as follows:
 
 .. code-block:: bibtex
 
-    @misc{hl_gaps_pub_2025,
-        author = {YOUR NAME(S)},
-        title = {{HL-gaps-pub: Predicting HOMO-LUMO Gaps of Natural Compounds with Machine Learning}},
-        year = {2025},
-        publisher = {Zenodo},
-        version = {v0.1.0},
-        doi = {PLACEHOLDER_DOI},
-        url = {https://zenodo.org/record/PLACEHOLDER_ZENODO_RECORD_ID}
-    }
-
-**Replace the following placeholders:**
-
-* **`placeholder_for_graphical_abstract.png`:** The filename of your graphical abstract image. Place the image file in the same directory as your README.rst, or provide a relative path.
-* **`main.yml` in the Build Status badge URL:** If your main GitHub Actions workflow file has a different name, update the URL accordingly.
-* **`PLACEHOLDER_DOI`:** with the actual DOI you get when deposit your repository.
-* **`https://zenodo.org/record/PLACEHOLDER_ZENODO_RECORD_ID`:** The link to your Zenodo deposit.
-* **`YOUR NAME(S)`:** Replace this by the author names.
-* **`year`:** The correct Year (Updated to 2025 based on current date).
-* **`version`:** v0.2.1
+    @software{sthinius87_2025_15113790,
+    author       = {sthinius87},
+    title        = {sthinius87/HL-gaps-pub: HL-gaps v0.2.1},
+    month        = mar,
+    year         = 2025,
+    publisher    = {Zenodo},
+    version      = {v0.2.1},
+    doi          = {10.5281/zenodo.15113790},
+    url          = {https://doi.org/10.5281/zenodo.15113790},
+}
   
-This improved README provides a good starting point. It clearly explains the project, highlights its key features, and directs users to the detailed documentation for installation and usage instructions. It also includes placeholders for important information like the graphical abstract and citation information. The use of reStructuredText directives (`.. image::`, `.. _HL-gaps-pub:`, `:ref:`) ensures proper formatting and linking within the Sphinx documentation. The inclusion of badges gives a quick overview of project health.
-
-
-
-
