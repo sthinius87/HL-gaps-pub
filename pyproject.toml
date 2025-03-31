@@ -84,3 +84,31 @@ testpaths = ["tests", "hl_gaps_pub"]
 # Remove this section. Conda handles XTBPATH
 # [tool.pytest_env]
 # XTBPATH = "/home/sat/miniforge3/envs/py310hl_gaps_pub/share/xtb"
+
+[tool.bumpversion]
+current_version = "0.1.0" # Make sure this matches your ACTUAL current version
+commit = true             # Automatically commit changes
+tag = true                # Automatically create a git tag
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)" # Standard semver parsing
+serialize = ["{major}.{minor}.{patch}"] # Standard semver formatting
+
+# Define the files to update
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"' # How to find the version in this file
+replace = 'version = "{new_version}"'    # How to write the new version
+
+[[tool.bumpversion.files]]
+filename = "hl_gaps_pub/__init__.py" # Assuming you have __version__ here
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
+
+[[tool.bumpversion.files]] # Add this block if you still have version in setup.py
+filename = "setup.py"
+search = 'version="{current_version}"'
+replace = 'version="{new_version}"'
+
+# [[tool.bumpversion.files]] # Add this block if you have version in docs/conf.py
+# filename = "docs/conf.py"
+# search = 'release = "{current_version}"'
+# replace = 'release = "{new_version}"'
