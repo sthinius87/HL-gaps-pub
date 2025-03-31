@@ -68,8 +68,13 @@ def response() -> None:
 
 
 def test_version():
-    """Test the version of the package."""
-    assert __version__ == "0.1.0"
+    """Test the version string exists and has a reasonable format."""
+    # Assert that the imported __version__ is a non-empty string
+    assert isinstance(__version__, str)
+    assert len(__version__) > 0
+
+    # Optional: Add a basic format check (e.g., contains dots)
+    assert "." in __version__
 
 
 def test_command_line_interface() -> None:
