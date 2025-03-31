@@ -6,7 +6,7 @@ from pathlib import Path
 
 from setuptools import find_packages, setup
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 
 module_dir = Path(__file__).resolve().parent
 with open(module_dir / "hl_gaps_pub" / "__init__.py", encoding="utf-8") as version_file:
