@@ -8,17 +8,13 @@ High throughput tight binding calculation of electronic HOMO-LUMO gaps and its p
     :target: https://github.com/sthinius87/HL-gaps-pub/actions
     :alt: Build Status
 
-.. image:: https://codecov.io/gh/sthinius87/HL-gaps-pub/graph/badge.svg?token=WFJUQSK6B9 
+.. image:: https://codecov.io/gh/sthinius87/HL-gaps-pub/graph/badge.svg?token=WFJUQSK6B9
     :target: https://codecov.io/gh/sthinius87/HL-gaps-pub
     :alt: Build Status
 
 .. image:: https://img.shields.io/badge/License-MIT-blue.svg
     :target: LICENSE
     :alt: License
-
-.. image:: https://img.shields.io/badge/DOI-PLACEHOLDER_DOI-blue.svg
-    :target: https://doi.org/PLACEHOLDER_DOI
-    :alt: DOI
 
 .. image:: https://img.shields.io/badge/tox-py3.10 | py3.xx-blue.svg
     :target: https://github.com/sthinius87/HL-gaps-pub/blob/main/tox.ini
@@ -40,7 +36,7 @@ High throughput tight binding calculation of electronic HOMO-LUMO gaps and its p
     :target: https://doi.org/10.5281/zenodo.15113789
     :alt: Zenodo
 
-.. image:: placeholder_for_graphical_abstract.png
+.. image:: docs/figures/graphical_abstract_edit.png
     :alt: Graphical Abstract
     :width: 600px
 
