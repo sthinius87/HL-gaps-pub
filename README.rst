@@ -68,7 +68,7 @@ Examples and detailed usage instructions are available in the :ref:`docs/usage.r
 
 **Contributing**
 
-Contributions are welcome! Please see the guidelines for details on how to :ref:`contribute <CONTRIBUTING.rst>` to the project.
+Contributions are welcome! Please see the :ref:`CONTRIBUTING.rst` guidelines for details on how to contribute to the project.
 
 **Authors**
 
