@@ -60,23 +60,26 @@ This research develops a high-throughput, machine-learning approach to predict H
 
 **Installation**
 
-Detailed installation instructions can be found in the :ref:`docs/installation_dev.rst` section of the documentation.
+Detailed installation instructions can be found in the :doc:`installation guide <installation_dev>` section of the documentation.
 
 **Usage**
 
-Examples and detailed usage instructions are available in the :ref:`docs/usage.rst`, :ref:`docs/cli.rst` and :ref:`docs/tutorial.rst` section of the documentation. This includes information on using the command-line interface (CLI) and running the CWL workflows.
+Examples and detailed usage instructions are available in the :doc:`usage Guide <usage>` section of the documentation. This includes information on using the command-line interface (CLI) and running the CWL workflows.
+
+**Tutorial**
+A comprehensive tutorial is available in the :doc:`tutorial <tutorial>` section of the documentation. This includes step-by-step instructions on how to set up and run the package, as well as examples of how to use the various features. Further material can be found in ``notebooks/`` directory.
 
 **Contributing**
 
-Contributions are welcome! Please see the :ref:`CONTRIBUTING.rst` guidelines for details on how to contribute to the project.
+Contributions are welcome! Please see the :doc:`contributing <contributing>` guidelines for details on how to contribute to the project.
 
 **Authors**
 
-The authors and contributors are listed in the :ref:`AUTHORS.rst` section of the documentation.
+The authors and contributors are listed in the :doc:`authors <authors>` section of the documentation.
 
 **License**
 
-This project is licensed under the MIT License - see the :ref:`LICENSE.rst` file for details.
+This project is licensed under the MIT License - see the :doc:`license <license>` file for details.
 
 **Citation**
 
