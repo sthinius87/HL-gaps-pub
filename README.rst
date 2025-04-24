@@ -40,6 +40,9 @@ High throughput tight binding calculation of electronic HOMO-LUMO gaps and its p
     :alt: Graphical Abstract
     :width: 600px
 
+#.. image:: figures/graphical_abstract_edit.png
+#    :alt: Graphical Abstract
+#    :width: 600px
 
 **Predicting HOMO-LUMO Gaps of Natural Compounds with Machine Learning**
 
@@ -96,5 +99,4 @@ If you use this package in your research, please cite it as follows:
     version      = {v0.2.1},
     doi          = {10.5281/zenodo.15113790},
     url          = {https://doi.org/10.5281/zenodo.15113790},
-}
-  
+    }
