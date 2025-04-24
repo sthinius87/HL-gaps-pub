@@ -12,6 +12,7 @@
    modules
    authors
    history
+   license
 
 
 Credits
