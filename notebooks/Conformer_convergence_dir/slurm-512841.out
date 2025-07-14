@@ -1,0 +1,144 @@
+Selected 10 SMILES for analysis: ['N(=C)C=1C=NC2=CNOC12', 'OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2', 'O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC', 'O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C', 'O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4', 'OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C', 'O=C(O)C1OC1(C)C2CCCC2C(=O)O', 'N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC', 'O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br', 'O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC']
+
+Processing SMILES: N(=C)C=1C=NC2=CNOC12
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 2.1376 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 2.1466 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 2.1272 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 2.1488 eV (for 40 conformers)
+
+Processing SMILES: OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 3.5731 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 3.8191 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 3.6415 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 3.6847 eV (for 40 conformers)
+
+Processing SMILES: O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 2.5556 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 2.5497 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 2.5473 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 2.5504 eV (for 40 conformers)
+
+Processing SMILES: O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 2.3943 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 2.6584 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 2.6868 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 2.6496 eV (for 40 conformers)
+
+Processing SMILES: O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 1.8540 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 2.2033 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 2.2074 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 2.4140 eV (for 40 conformers)
+
+Processing SMILES: OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 3.3757 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 3.2898 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 3.3017 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 3.3496 eV (for 40 conformers)
+
+Processing SMILES: O=C(O)C1OC1(C)C2CCCC2C(=O)O
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 4.4510 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 4.4400 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 4.4869 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 4.4695 eV (for 40 conformers)
+
+Processing SMILES: N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 2.2263 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 2.3894 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 2.4004 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 2.2871 eV (for 40 conformers)
+
+Processing SMILES: O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 3.7128 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 3.6549 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 3.6609 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 3.6587 eV (for 40 conformers)
+
+Processing SMILES: O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC
+  Attempting with 5 conformers...
+    Successfully calculated HL-gap: 2.2046 eV (for 5 conformers)
+  Attempting with 10 conformers...
+    Successfully calculated HL-gap: 2.2615 eV (for 10 conformers)
+  Attempting with 20 conformers...
+    Successfully calculated HL-gap: 2.4200 eV (for 20 conformers)
+  Attempting with 40 conformers...
+    Successfully calculated HL-gap: 2.4017 eV (for 40 conformers)
+[{'smiles': 'N(=C)C=1C=NC2=CNOC12', 'num_conformers': 5, 'hl_gap': 2.1376247468941463, 'error': None}, {'smiles': 'N(=C)C=1C=NC2=CNOC12', 'num_conformers': 10, 'hl_gap': 2.1466017907382215, 'error': None}, {'smiles': 'N(=C)C=1C=NC2=CNOC12', 'num_conformers': 20, 'hl_gap': 2.1271526751515633, 'error': None}, {'smiles': 'N(=C)C=1C=NC2=CNOC12', 'num_conformers': 40, 'hl_gap': 2.1488440144902263, 'error': None}, {'smiles': 'OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2', 'num_conformers': 5, 'hl_gap': 3.5730865190719534, 'error': None}, {'smiles': 'OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2', 'num_conformers': 10, 'hl_gap': 3.819050431462431, 'error': None}, {'smiles': 'OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2', 'num_conformers': 20, 'hl_gap': 3.641522613520416, 'error': None}, {'smiles': 'OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2', 'num_conformers': 40, 'hl_gap': 3.684678670761957, 'error': None}, {'smiles': 'O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC', 'num_conformers': 5, 'hl_gap': 2.5555677017393856, 'error': None}, {'smiles': 'O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC', 'num_conformers': 10, 'hl_gap': 2.5497010996874017, 'error': None}, {'smiles': 'O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC', 'num_conformers': 20, 'hl_gap': 2.5473483018200236, 'error': None}, {'smiles': 'O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC', 'num_conformers': 40, 'hl_gap': 2.55036650547199, 'error': None}, {'smiles': 'O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C', 'num_conformers': 5, 'hl_gap': 2.3942646647997328, 'error': None}, {'smiles': 'O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C', 'num_conformers': 10, 'hl_gap': 2.6584228229337423, 'error': None}, {'smiles': 'O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C', 'num_conformers': 20, 'hl_gap': 2.6868495853649463, 'error': None}, {'smiles': 'O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C', 'num_conformers': 40, 'hl_gap': 2.649624488866278, 'error': None}, {'smiles': 'O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4', 'num_conformers': 5, 'hl_gap': 1.8539966945572013, 'error': None}, {'smiles': 'O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4', 'num_conformers': 10, 'hl_gap': 2.2032999855407365, 'error': None}, {'smiles': 'O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4', 'num_conformers': 20, 'hl_gap': 2.2073885614031923, 'error': None}, {'smiles': 'O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4', 'num_conformers': 40, 'hl_gap': 2.414006156756279, 'error': None}, {'smiles': 'OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C', 'num_conformers': 5, 'hl_gap': 3.3756805503925977, 'error': None}, {'smiles': 'OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C', 'num_conformers': 10, 'hl_gap': 3.2898364330009295, 'error': None}, {'smiles': 'OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C', 'num_conformers': 20, 'hl_gap': 3.3016673592574928, 'error': None}, {'smiles': 'OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C', 'num_conformers': 40, 'hl_gap': 3.349647785754547, 'error': None}, {'smiles': 'O=C(O)C1OC1(C)C2CCCC2C(=O)O', 'num_conformers': 5, 'hl_gap': 4.451032478518698, 'error': None}, {'smiles': 'O=C(O)C1OC1(C)C2CCCC2C(=O)O', 'num_conformers': 10, 'hl_gap': 4.440012649679987, 'error': None}, {'smiles': 'O=C(O)C1OC1(C)C2CCCC2C(=O)O', 'num_conformers': 20, 'hl_gap': 4.486926725891388, 'error': None}, {'smiles': 'O=C(O)C1OC1(C)C2CCCC2C(=O)O', 'num_conformers': 40, 'hl_gap': 4.469510599622586, 'error': None}, {'smiles': 'N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC', 'num_conformers': 5, 'hl_gap': 2.226277316781796, 'error': None}, {'smiles': 'N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC', 'num_conformers': 10, 'hl_gap': 2.3894264311267266, 'error': None}, {'smiles': 'N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC', 'num_conformers': 20, 'hl_gap': 2.400350936696541, 'error': None}, {'smiles': 'N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC', 'num_conformers': 40, 'hl_gap': 2.287124842520622, 'error': None}, {'smiles': 'O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br', 'num_conformers': 5, 'hl_gap': 3.7128404915428073, 'error': None}, {'smiles': 'O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br', 'num_conformers': 10, 'hl_gap': 3.6549204696820903, 'error': None}, {'smiles': 'O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br', 'num_conformers': 20, 'hl_gap': 3.6609200038381466, 'error': None}, {'smiles': 'O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br', 'num_conformers': 40, 'hl_gap': 3.6587400871300226, 'error': None}, {'smiles': 'O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC', 'num_conformers': 5, 'hl_gap': 2.2046327218987862, 'error': None}, {'smiles': 'O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC', 'num_conformers': 10, 'hl_gap': 2.2614788421511514, 'error': None}, {'smiles': 'O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC', 'num_conformers': 20, 'hl_gap': 2.42003705056985, 'error': None}, {'smiles': 'O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC', 'num_conformers': 40, 'hl_gap': 2.401724196587608, 'error': None}]
+{'smiles': 'N(=C)C=1C=NC2=CNOC12', 'num_conformers': 5, 'hl_gap': 2.1376247468941463, 'error': None}
+{'smiles': 'N(=C)C=1C=NC2=CNOC12', 'num_conformers': 10, 'hl_gap': 2.1466017907382215, 'error': None}
+{'smiles': 'N(=C)C=1C=NC2=CNOC12', 'num_conformers': 20, 'hl_gap': 2.1271526751515633, 'error': None}
+{'smiles': 'N(=C)C=1C=NC2=CNOC12', 'num_conformers': 40, 'hl_gap': 2.1488440144902263, 'error': None}
+{'smiles': 'OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2', 'num_conformers': 5, 'hl_gap': 3.5730865190719534, 'error': None}
+{'smiles': 'OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2', 'num_conformers': 10, 'hl_gap': 3.819050431462431, 'error': None}
+{'smiles': 'OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2', 'num_conformers': 20, 'hl_gap': 3.641522613520416, 'error': None}
+{'smiles': 'OC(C1=CC=C(C=C1)C)CC2=NC=3C=CC=CC3O2', 'num_conformers': 40, 'hl_gap': 3.684678670761957, 'error': None}
+{'smiles': 'O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC', 'num_conformers': 5, 'hl_gap': 2.5555677017393856, 'error': None}
+{'smiles': 'O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC', 'num_conformers': 10, 'hl_gap': 2.5497010996874017, 'error': None}
+{'smiles': 'O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC', 'num_conformers': 20, 'hl_gap': 2.5473483018200236, 'error': None}
+{'smiles': 'O=C(Cl)C1=CC(OC)=C(OC)C(OC)=C1OC', 'num_conformers': 40, 'hl_gap': 2.55036650547199, 'error': None}
+{'smiles': 'O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C', 'num_conformers': 5, 'hl_gap': 2.3942646647997328, 'error': None}
+{'smiles': 'O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C', 'num_conformers': 10, 'hl_gap': 2.6584228229337423, 'error': None}
+{'smiles': 'O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C', 'num_conformers': 20, 'hl_gap': 2.6868495853649463, 'error': None}
+{'smiles': 'O=C(OCC=CCCCCCC)C(C)CCCC(O)(C)CCCC(C)CCC(=O)C1=C(C=CCC1(C)C)C', 'num_conformers': 40, 'hl_gap': 2.649624488866278, 'error': None}
+{'smiles': 'O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4', 'num_conformers': 5, 'hl_gap': 1.8539966945572013, 'error': None}
+{'smiles': 'O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4', 'num_conformers': 10, 'hl_gap': 2.2032999855407365, 'error': None}
+{'smiles': 'O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4', 'num_conformers': 20, 'hl_gap': 2.2073885614031923, 'error': None}
+{'smiles': 'O=C(C=CC1=CC=C(O)C=C1)C(O)C2(C)C(O)C(O)CC3(C)C4C(=CC(=O)C32)CC5(C)CCC6C(C)(CO)C(O)CCC6(C)C5CC4', 'num_conformers': 40, 'hl_gap': 2.414006156756279, 'error': None}
+{'smiles': 'OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C', 'num_conformers': 5, 'hl_gap': 3.3756805503925977, 'error': None}
+{'smiles': 'OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C', 'num_conformers': 10, 'hl_gap': 3.2898364330009295, 'error': None}
+{'smiles': 'OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C', 'num_conformers': 20, 'hl_gap': 3.3016673592574928, 'error': None}
+{'smiles': 'OC1=CC=C(C=C1)CC2C3=CC(O)=C(OC)C=C3CCN2C', 'num_conformers': 40, 'hl_gap': 3.349647785754547, 'error': None}
+{'smiles': 'O=C(O)C1OC1(C)C2CCCC2C(=O)O', 'num_conformers': 5, 'hl_gap': 4.451032478518698, 'error': None}
+{'smiles': 'O=C(O)C1OC1(C)C2CCCC2C(=O)O', 'num_conformers': 10, 'hl_gap': 4.440012649679987, 'error': None}
+{'smiles': 'O=C(O)C1OC1(C)C2CCCC2C(=O)O', 'num_conformers': 20, 'hl_gap': 4.486926725891388, 'error': None}
+{'smiles': 'O=C(O)C1OC1(C)C2CCCC2C(=O)O', 'num_conformers': 40, 'hl_gap': 4.469510599622586, 'error': None}
+{'smiles': 'N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC', 'num_conformers': 5, 'hl_gap': 2.226277316781796, 'error': None}
+{'smiles': 'N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC', 'num_conformers': 10, 'hl_gap': 2.3894264311267266, 'error': None}
+{'smiles': 'N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC', 'num_conformers': 20, 'hl_gap': 2.400350936696541, 'error': None}
+{'smiles': 'N#CC1=CC=C(C=C1)C(=O)N2CC3C4=C(C=CC(=O)N4CC(C2)C3)C=CC', 'num_conformers': 40, 'hl_gap': 2.287124842520622, 'error': None}
+{'smiles': 'O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br', 'num_conformers': 5, 'hl_gap': 3.7128404915428073, 'error': None}
+{'smiles': 'O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br', 'num_conformers': 10, 'hl_gap': 3.6549204696820903, 'error': None}
+{'smiles': 'O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br', 'num_conformers': 20, 'hl_gap': 3.6609200038381466, 'error': None}
+{'smiles': 'O=C(O)C(C=1C=CC=CC1)CC2=CC(O)=C(O)C(Br)=C2Br', 'num_conformers': 40, 'hl_gap': 3.6587400871300226, 'error': None}
+{'smiles': 'O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC', 'num_conformers': 5, 'hl_gap': 2.2046327218987862, 'error': None}
+{'smiles': 'O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC', 'num_conformers': 10, 'hl_gap': 2.2614788421511514, 'error': None}
+{'smiles': 'O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC', 'num_conformers': 20, 'hl_gap': 2.42003705056985, 'error': None}
+{'smiles': 'O=C(O)C(NC(=O)C=1N=C(C=2C=CC=CC2)N(N1)C3=CC=C(C=C3)C)CCSC', 'num_conformers': 40, 'hl_gap': 2.401724196587608, 'error': None}
+Results saved to CSV: conformer_convergence_results.csv
+Results saved to Pickle: conformer_convergence_results.pkl

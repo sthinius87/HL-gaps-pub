@@ -1,0 +1,10 @@
+#! /bin/bash
+#SBATCH --nodes 1
+#SBATCH --ntasks 12
+#SBATCH --ntasks-per-node 12
+
+export OMPI_MCA_pml="ucx"
+export OMPI_MCA_osc="ucx"
+
+python generalization_analysis_GBR.py
+#python selfies_gap_GBR_search.py
