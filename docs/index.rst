@@ -1,3 +1,7 @@
+===========
+HL-gaps-pub
+===========
+
 .. include:: ../README.rst
 
 .. toctree::

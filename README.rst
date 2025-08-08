@@ -1,6 +1,4 @@
-===========
-HL-gaps-pub
-===========
+
 
 High throughput tight binding calculation of electronic HOMO-LUMO gaps and its prediction for natural compounds
 
