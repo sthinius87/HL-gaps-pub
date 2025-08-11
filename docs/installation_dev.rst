@@ -40,9 +40,8 @@ Optional Installation Steps
 Build Documentation
 ...................
 
-This step requires a `sphinx` installation. If not available on the system, install the development environment
-which contains the necessary packages (`pip install -r requirements/dev.txt`). make sure to activate the environment.
-Since we have a linux package, build it under linux. Build the documentation under Windos will fail due to the usage of links to tho notebooks.
+This step requires a `sphinx` installation, shipped with the installation described above. Make sure to activate the environment.
+Since we have a Linux package, build it under Linux. Building the documentation under Windos will fail due to the usage of links to tho notebooks.
 
 .. code-block:: console
 
