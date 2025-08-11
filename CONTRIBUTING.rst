@@ -63,17 +63,17 @@ helps, and credit will always be given.
 
 .. _bumpversion: https://github.com/c4urself/bump2version
 
-Update the Cookiecutter Template
-................................
-
-Use cookiecutter replay to update your project skeleton.
-
-.. code-block:: console
-
-    $ cd ..
-    $ cookiecutter --overwrite-if-exists --config-file=HL-gaps-pub/.cookiecutterrc https://gitlab.cc-asp.fraunhofer.de/ifam418/cookiecutter-pypackage
-
-The previous configuration is loaded from `.cookiecutterrc`.
+..  Update the Cookiecutter Template
+..  ................................
+..  
+..  Use cookiecutter replay to update your project skeleton.
+..  
+..  .. code-block:: console
+..  
+..      $ cd ..
+..      $ cookiecutter --overwrite-if-exists --config-file=HL-gaps-pub/.cookiecutterrc https://gitlab.cc-asp.fraunhofer.de/ifam418/cookiecutter-pypackage
+..  
+..  The previous configuration is loaded from `.cookiecutterrc`.
 
 
 Types of Contributions
@@ -82,7 +82,7 @@ Types of Contributions
 Report Bugs
 ...........
 
-Report bugs at https://HL_gaps_pub/ifam418/HL-gaps-pub/issues.
+Report bugs at https://github.com/sthinius87/HL-gaps-pub/issues.
 
 If you are reporting a bug, please include:
 

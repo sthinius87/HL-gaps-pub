@@ -9,7 +9,6 @@ HL-gaps-pub
    :hidden:
 
    installation_dev
-   usage
    cli
    tutorial
    contributing

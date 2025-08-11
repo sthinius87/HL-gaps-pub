@@ -63,10 +63,6 @@ This research develops a high-throughput, machine-learning approach to predict H
 
 Detailed installation instructions can be found in the :doc:`installation guide <installation_dev>` section of the documentation.
 
-**Usage**
-
-Examples and detailed usage instructions are available in the :doc:`usage Guide <usage>` section of the documentation. This includes information on using the command-line interface (CLI) and running the CWL workflows.
-
 **Tutorial**
 A comprehensive tutorial is available in the :doc:`tutorial <tutorial>` section of the documentation. This includes step-by-step instructions on how to set up and run the package, as well as examples of how to use the various features. Further material can be found in ``notebooks/`` directory.
 
