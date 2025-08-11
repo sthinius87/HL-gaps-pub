@@ -1,8 +1,7 @@
 .. _installation:
 
-Installation (Development Mode)
-===============================
-
+Development Installation Instructions
+=====================================
 
 The sources for `HL-gaps-pub` can be downloaded from the `Gitlab repo`_.
 You can clone the public repository as follows:

@@ -7,7 +7,7 @@ Get Started!
 ------------
 
 Ready to contribute? Here's how to set up `HL-gaps-pub` for local development:
-:ref:`Development Installation Instructions`.
+:ref:`installation`.
 
 Start Implementing
 ..................
