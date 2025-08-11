@@ -3,50 +3,24 @@
 Installation (Development Mode)
 ===============================
 
-.. _Use a Virtual Environment:
 
-Use a Virtual Environment
--------------------------
-
-Use the Standard Library `venv` package to create a Python virtual environment.
+The sources for `HL-gaps-pub` can be downloaded from the `Gitlab repo`_.
+You can clone the public repository as follows:
 
 .. code-block:: console
 
-    $ python -m venv env
-    $ .\env\Scripts\activate  # (Windows)
-    $ source env/bin/activate # (Linux)
+    $ git clone https://github.com/sthinius87
 
-The Python version of the virtual environment will match the Python version of your base
-interpreter, see `Installing packages using pip and virtual environments`_.
+.. _Reproduce the Environment:
 
-.. important::
-   The command to activate the environment depends on the virtual environment manager
-   of our choice, your operating system, and your shell. On Linux, you must `source`.
-
-Upgrade to the latest version of pip in the virtual environment (Recommended).
-
-.. code-block:: console
-
-    $ python -m pip install --upgrade pip
-    $ pip -V # >= 21.3?
-
-If you don't have `pip`_ installed, this `Python installation guide`_ can guide
-you through the process.
-As an alternative to using the `venv` package, you may create and activate a Conda-environment.
-This step requires a Python-distribution with Conda package management https://www.anaconda.com/.
-
-.. code-block:: console
-
-    $ conda env create --name py310hl_gaps_pub python=3.10
-    $ conda activate py310hl_gaps_pub
-
-Or use the `environment.yml` file:
+Use the `environment.yml` file:
 
 .. code-block:: console
 
     $ mamba env create -f environment.yml
 
 
+.. _mamba: https://github.com/conda-forge/miniforge
 .. _pip: https://pip.pypa.io
 .. _Installing packages using pip and virtual environments: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
@@ -62,8 +36,7 @@ You can clone the public repository as follows:
 
 .. code-block:: console
 
-    $ git clone https://HL_gaps_pub/ifam418/HL-gaps-pub.git
-
+    $ git clone https://github.com/sthinius87
 Having a SSL problem?
 
 .. code-block:: console
