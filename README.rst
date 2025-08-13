@@ -57,26 +57,30 @@ This research develops a high-throughput, machine-learning approach to predict H
 
 **Installation**
 
-Detailed installation instructions can be found in the `install<./docs/installation_dev.rst>`_ section of the documentation.
+Detailed installation instructions can be found in the `install <./docs/installation_dev.rst>`_ section of the documentation.
 
 **Tutorial**
-A comprehensive tutorial is available in the `tutorial <./docs/tutorial.rst>` section of the documentation. This includes step-by-step instructions on how to set up and run the package, as well as examples of how to use the various features. Further material can be found in ``notebooks/`` directory.
+A comprehensive tutorial is available in the `tutorial <./docs/tutorial.rst>`_ section of the documentation. This includes step-by-step instructions on how to set up and run the package, as well as examples of how to use the various features. Further material can be found in ``notebooks/`` directory.
 
 **Contributing**
 
-Contributions are welcome! Please see the `contributing <./docs/contributing.rst>` guidelines for details on how to contribute to the project.
+Contributions are welcome! Please see the `contributing <./docs/contributing.rst>`_ guidelines for details on how to contribute to the project.
 
 **Authors**
 
-The authors and contributors are listed in the `authors <./docs/authors.rst>` section of the documentation.
+The authors and contributors are listed in the `authors <./docs/authors.rst>`_ section of the documentation.
 
 **License**
 
-This project is licensed under the MIT License - see the `license <./docs/license.rst>` file for details.
+This project is licensed under the MIT License - see the `license <./docs/license.rst>`_ file for details.
 
 **Citation**
 
 If you use this package in your research, please cite it as follows:
+
+`This site`_ links to the same location as `these words <This site_>`_.
+
+.. _This site: https://www.example.com
 
 .. code-block:: bibtex
 
