@@ -40,7 +40,7 @@ Build Documentation
 ...................
 
 This step requires a `sphinx` installation, shipped with the installation described above. Make sure to activate the environment.
-Since we have a Linux package, build it under Linux. Building the documentation under Windos will fail due to the usage of links to tho notebooks.
+Since we have a Linux package, build it under **Linux**. Building the documentation under Windos will fail due to the usage of links to tho notebooks.
 
 .. code-block:: console
 
