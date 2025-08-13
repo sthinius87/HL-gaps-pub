@@ -64,23 +64,19 @@ A comprehensive tutorial is available in the `tutorial <./docs/tutorial.rst>`_ s
 
 **Contributing**
 
-Contributions are welcome! Please see the `contributing <./docs/contributing.rst>`_ guidelines for details on how to contribute to the project.
+Contributions are welcome! Please see the `contributing <CONTRIBUTING.rst>`_ guidelines for details on how to contribute to the project.
 
 **Authors**
 
-The authors and contributors are listed in the `authors <./docs/authors.rst>`_ section of the documentation.
+The authors and contributors are listed in the `authors <AUTHORS.rst>`_ section of the documentation.
 
 **License**
 
-This project is licensed under the MIT License - see the `license <./docs/license.rst>`_ file for details.
+This project is licensed under the MIT License - see the `license <LICENSE.rst>`_ file for details.
 
 **Citation**
 
 If you use this package in your research, please cite it as follows:
-
-`This site`_ links to the same location as `these words <This site_>`_.
-
-.. _This site: https://www.example.com
 
 .. code-block:: bibtex
 
