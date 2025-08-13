@@ -1,7 +1,4 @@
 
-
-High throughput tight binding calculation of electronic HOMO-LUMO gaps and its prediction for natural compounds
-
 .. image:: https://github.com/sthinius87/HL-gaps-pub/actions/workflows/main.yml/badge.svg
     :target: https://github.com/sthinius87/HL-gaps-pub/actions
     :alt: Build Status
@@ -60,6 +57,7 @@ This research develops a high-throughput, machine-learning approach to predict H
 Detailed installation instructions can be found in the `install <./docs/installation_dev.rst>`_ section of the documentation.
 
 **Tutorial**
+
 A comprehensive tutorial is available in the `tutorial <./docs/tutorial.rst>`_ section of the documentation. This includes step-by-step instructions on how to set up and run the package, as well as examples of how to use the various features. Further material can be found in ``notebooks/`` directory.
 
 **Contributing**
