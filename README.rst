@@ -60,19 +60,19 @@ This research develops a high-throughput, machine-learning approach to predict H
 Detailed installation instructions can be found in the `install<./docs/installation_dev.rst>`_ section of the documentation.
 
 **Tutorial**
-A comprehensive tutorial is available in the :doc:`tutorial <tutorial>` section of the documentation. This includes step-by-step instructions on how to set up and run the package, as well as examples of how to use the various features. Further material can be found in ``notebooks/`` directory.
+A comprehensive tutorial is available in the `tutorial <./docs/tutorial.rst>` section of the documentation. This includes step-by-step instructions on how to set up and run the package, as well as examples of how to use the various features. Further material can be found in ``notebooks/`` directory.
 
 **Contributing**
 
-Contributions are welcome! Please see the :doc:`contributing <contributing>` guidelines for details on how to contribute to the project.
+Contributions are welcome! Please see the `contributing <./docs/contributing.rst>` guidelines for details on how to contribute to the project.
 
 **Authors**
 
-The authors and contributors are listed in the :doc:`authors <authors>` section of the documentation.
+The authors and contributors are listed in the `authors <./docs/authors.rst>` section of the documentation.
 
 **License**
 
-This project is licensed under the MIT License - see the :doc:`license <license>` file for details.
+This project is licensed under the MIT License - see the `license <./docs/license.rst>` file for details.
 
 **Citation**
 
