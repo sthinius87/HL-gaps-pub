@@ -72,7 +72,7 @@ The authors and contributors are listed in the `authors <AUTHORS.rst>`_ section 
 
 **License**
 
-This project is licensed under the MIT License - see the `license <LICENSE.rst>`_ file for details.
+This project is licensed under the MIT License - see the `license <LICENSE>`_ file for details.
 
 **Citation**
 
