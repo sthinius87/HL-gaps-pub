@@ -38,7 +38,7 @@ test_requirements = [ "pytest>=3", ]
 
 setup(
     author="Sascha Thinius",
-    author_email="sascha.thinius@ifam.fraunhofer.de",
+    author_email="sascha.thinius.87@gmail.de",
     python_requires=">=3.9",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",

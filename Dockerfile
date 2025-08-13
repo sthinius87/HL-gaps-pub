@@ -7,7 +7,7 @@ ARG NO_PROXY localhost
 ARG PIP_EXTRA_INDEX_URL ${PIP_EXTRA_INDEX_URL}
 ARG GIT_SSL_NO_VERIFY: "True"
 
-MAINTAINER Sascha Thinius <sascha.thinius@ifam.fraunhofer.de>
+MAINTAINER Sascha Thinius <sascha.thinius.87@gmail.de>
 
 WORKDIR /app/build
 COPY . .
