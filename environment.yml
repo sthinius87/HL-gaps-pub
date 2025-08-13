@@ -45,8 +45,9 @@ dependencies:
   - sphinx-click
   - sphinx-copybutton
   - sphinx-tabs
-  - sphinxcontrib-bibtex
-  - tox
-  - tox-conda
+  - sphinxcontrib-bibtex # tox-conda v0.8.4 is compatible with tox v3
   - xtb
   - xtb-python
+  - pip:
+    - tox==3.28.0 # Keep tox v3
+    - tox-conda==0.8.4
