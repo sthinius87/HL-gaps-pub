@@ -6,7 +6,7 @@ Credits
 Development Lead
 ----------------
 
-* Sascha Thinius <sascha.thinius@ifam.fraunhofer.de>
+* Sascha Thinius <sascha.thinius.87@gmail.de>
 
 Contributors
 ------------
