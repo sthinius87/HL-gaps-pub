@@ -517,3 +517,4 @@ scripts/PI_test.joblib
 scripts/PI_train.joblib
 data/processed/reg_GBR.joblib
 data/processed/reg_GBR.pkl
+data/processed/reg_RF.joblib
